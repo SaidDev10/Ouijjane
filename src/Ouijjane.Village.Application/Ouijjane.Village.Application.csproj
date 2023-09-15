@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Specifications\**" />
+    <EmbeddedResource Remove="Specifications\**" />
+    <None Remove="Specifications\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Ouijjane.Shared.Application\Ouijjane.Shared.Application.csproj" />
+    <ProjectReference Include="..\Ouijjane.Village.Domain\Ouijjane.Village.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Interfaces\Persistence\" />
+  </ItemGroup>
+
+</Project>
