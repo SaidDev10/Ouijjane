@@ -1,6 +1,8 @@
-﻿namespace Ouijjane.Village.Domain.Entities
+﻿using Ouijjane.Shared.Domain.Entities;
+
+namespace Ouijjane.Village.Domain.Entities
 {
-    public class Donor
+    public class Donor : AuditableEntity<int>
     {
         
     }

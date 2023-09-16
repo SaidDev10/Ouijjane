@@ -1,8 +1,9 @@
-﻿using Ouijjane.Village.Domain.ValueObjects;
+﻿using Ouijjane.Shared.Domain.Entities;
+using Ouijjane.Village.Domain.ValueObjects;
 
 namespace Ouijjane.Village.Domain.Entities
 {
-    public class Work
+    public class Work : AuditableEntity<int>
     {
         public string? Name { get; set; }
         public Amount? Budget { get; set; }

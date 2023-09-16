@@ -1,8 +1,9 @@
-﻿using Ouijjane.Village.Domain.ValueObjects;
+﻿using Ouijjane.Shared.Domain.Entities;
+using Ouijjane.Village.Domain.ValueObjects;
 
 namespace Ouijjane.Village.Domain.Entities
 {
-    public class Donation
+    public class Donation : AuditableEntity<int>
     {
         public Amount? Amount { get; set; }
         public bool Paid { get; set; } = false;
