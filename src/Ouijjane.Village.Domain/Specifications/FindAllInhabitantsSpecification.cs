@@ -10,30 +10,27 @@ public class FindAllInhabitantsSpecification : BaseSpecification<Inhabitant>
     {
         if (!string.IsNullOrEmpty(searchString))
         {
-            AddCriteria(x => x.FirstName!.Contains(searchString)
-                          || x.LastName!.Contains(searchString)
-                          || x.FatherName!.Contains(searchString)
-                          || x.Email!.Contains(searchString)
-                          || x.Phone!.Contains(searchString)
-                          || x.Address!.Contains(searchString)
-                          || x.Birthdate!.ToShortDateString().Contains(searchString)); // => throws exception "Linq Cannot Translate ToShortDateString()"
-
-            //AddCriteria(x => !string.IsNullOrEmpty(x.FirstName) && x.FirstName.Contains(searchString)
-            //              || !string.IsNullOrEmpty(x.LastName) && x.LastName.Contains(searchString)
-            //              || !string.IsNullOrEmpty(x.FatherName) && x.FatherName.Contains(searchString)
-            //              || !string.IsNullOrEmpty(x.Email) && x.Email.Contains(searchString)
-            //              || !string.IsNullOrEmpty(x.Phone) && x.Phone.Contains(searchString)
-            //              || !string.IsNullOrEmpty(x.Address) && x.Address.Contains(searchString)
-            //              || x.Birthdate.ToShortDateString().Contains(searchString) // => throws exception "Linq Cannot Translate ToShortDateString()"
-            //               );
+            if (DateOnly.TryParse(searchString, out var date))
+            {
+                AddCriteria(x => x.Birthdate == date);
+            }
+            else
+            {
+                AddCriteria(x => x.FirstName!.Contains(searchString)
+                              || x.LastName!.Contains(searchString)
+                              || x.FatherName!.Contains(searchString)
+                              || x.Email!.Contains(searchString)
+                              || x.Phone!.Contains(searchString)
+                              || x.Address!.Contains(searchString));
+            }
         }
 
         return this;
     }
 
-    public FindAllInhabitantsSpecification ApplyPagination(int skip, int take)
+    public FindAllInhabitantsSpecification ApplyPagination(int pageNumber, int pageSize)
     {
-        ApplyPaging(skip, take);
+        ApplyPaging(pageNumber, pageSize);
 
         return this;
     }
@@ -52,6 +49,13 @@ public class FindAllInhabitantsSpecification : BaseSpecification<Inhabitant>
             }
         }
 
+        return this;
+    }
+
+    public FindAllInhabitantsSpecification ReadOnly()
+    {
+        ApplyReadOnly();
+        
         return this;
     }
 

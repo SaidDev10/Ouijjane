@@ -81,7 +81,7 @@ public class DatabaseSeeder : IDatabaseSeeder
                 FatherName = "Boujemaa",
                 Address = "Marseille, France",
                 Phone = "01 23 45 67 89",
-                Email = "said@testcom",
+                Email = "said@test.com",
                 Birthdate = new DateOnly(1991, 07, 25),
                 IsMarried = true
             });

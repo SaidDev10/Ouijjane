@@ -6,6 +6,8 @@ using Ouijjane.Shared.Application.Interfaces.Persistence.Repositories;
 using Ouijjane.Shared.Infrastructure.Extensions;
 using Ouijjane.Shared.Infrastructure.Persistence.Factories;
 using Ouijjane.Shared.Infrastructure.Persistence.Repositories;
+using Microsoft.EntityFrameworkCore.Diagnostics;
+using Ouijjane.Shared.Infrastructure.Interceptors;
 
 namespace Ouijjane.Shared.Infrastructure.Extensions;
 public static class ServiceCollectionExtensions
@@ -14,6 +16,7 @@ public static class ServiceCollectionExtensions
     {
         services.AddDbContext<TContext>(databaseType);
         services.AddOutboxServices<TContext>();
+        services.AddInterceptors();
     }
 
     public static void AddDatabaseServices(this IServiceCollection services, Action<IServiceCollection>? useCustomFactory)
@@ -29,12 +32,19 @@ public static class ServiceCollectionExtensions
         }
     }
 
+    private static void AddInterceptors(this IServiceCollection services)
+    {
+        services.AddScoped<ISaveChangesInterceptor, AuditableEntityInterceptor>();
+    }
+
     private static void AddDbContext<TContext>(this IServiceCollection services, DatabaseType databaseType) where TContext : DbContext
     {
         services.AddDbContext<TContext>((sp, options) =>
         {
             var connectionString = sp.GetRequiredService<IConnectionStringFactory>().Create();
             ArgumentException.ThrowIfNullOrEmpty(connectionString, nameof(connectionString));
+
+            options.AddInterceptors(sp.GetServices<ISaveChangesInterceptor>());
 
             switch (databaseType)
             {

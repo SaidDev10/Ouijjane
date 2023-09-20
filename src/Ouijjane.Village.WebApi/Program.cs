@@ -4,7 +4,7 @@ using Ouijjane.Village.WebApi.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddApplicationServices();
+builder.Services.AddApplicationServices(builder.Configuration);
 builder.Services.AddInfrastructureServices();
 builder.Services.AddWebServices(builder.Environment);
 

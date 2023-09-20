@@ -8,9 +8,9 @@ public static class ApplicationBuilderExtensions
     {
         app.UseExceptionHandling(environment);
 
-        app.AddSwagger(environment);
-
         await app.AddDatabaseInitialisation(environment);
+
+        app.AddSwagger(environment);
 
         app.UseHttpsRedirection();
 
@@ -21,7 +21,7 @@ public static class ApplicationBuilderExtensions
     {
         if (env.IsDevelopment())
         {
-            app.UseDeveloperExceptionPage();
+            //app.UseDeveloperExceptionPage(); TODO: delete this line because it is already included in: var builder = WebApplication.CreateBuilder(args);
         }
     }
 

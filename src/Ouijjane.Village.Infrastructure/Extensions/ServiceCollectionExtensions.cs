@@ -18,8 +18,4 @@ public static class ServiceCollectionExtensions
 
     private static void AddDatabaseSeeder(this IServiceCollection services) => services.AddScoped<IDatabaseSeeder, DatabaseSeeder>();
 
-    private static void AddRepositories(this IServiceCollection services)
-    {
-
-    }
 }

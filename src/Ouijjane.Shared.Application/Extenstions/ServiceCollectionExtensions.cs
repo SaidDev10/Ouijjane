@@ -1,14 +1,17 @@
 ﻿using FluentValidation;
 using MediatR;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Ouijjane.Shared.Application.Behaviours;
+using Ouijjane.Shared.Application.Configurations;
 
 namespace Ouijjane.Shared.Application.Extenstions;
 public static class ServiceCollectionExtensions
 {
-    public static void AddSharedApplicationServices(this IServiceCollection services, Type type)
+    public static void AddSharedApplicationServices(this IServiceCollection services, IConfiguration configuration, Type type)
     {
         services.AddMediator(type);
+        services.AddMicroServiceConfiguration(configuration);
     }
 
     private static void AddMediator(this IServiceCollection services, Type type)
@@ -22,6 +25,13 @@ public static class ServiceCollectionExtensions
             cfg.AddBehavior(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
             //cfg.AddBehavior(typeof(IPipelineBehavior<,>), typeof(PerformanceBehaviour<,>));
         });
+    }
+
+    private static void AddMicroServiceConfiguration(this IServiceCollection services, IConfiguration configuration)
+    {
+        string sectionName = "MicroService";
+
+        services.Configure<MicroServiceConfiguration>(configuration.GetSection(sectionName));
     }
 
     //private static void AddMapster(this IServiceCollection services)

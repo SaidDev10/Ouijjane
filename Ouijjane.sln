@@ -38,6 +38,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{DEFD549E-A
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{33996D60-BFB0-4000-A4A2-A49241274F20}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{E5F792B1-1AE6-4617-87B3-7E95052F05F9}"
+	ProjectSection(SolutionItems) = preProject
+		Dockerfile = Dockerfile
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ouijjane.Village.Database", "src\Ouijjane.Village.Database\Ouijjane.Village.Database.csproj", "{6E81ABFB-98A9-49E9-899F-11416E3CDF7F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -72,6 +79,10 @@ Global
 		{80C42EE8-C4F8-4762-8D6D-AF90E4C38E51}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{80C42EE8-C4F8-4762-8D6D-AF90E4C38E51}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{80C42EE8-C4F8-4762-8D6D-AF90E4C38E51}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6E81ABFB-98A9-49E9-899F-11416E3CDF7F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E81ABFB-98A9-49E9-899F-11416E3CDF7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E81ABFB-98A9-49E9-899F-11416E3CDF7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E81ABFB-98A9-49E9-899F-11416E3CDF7F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -91,6 +102,8 @@ Global
 		{80C42EE8-C4F8-4762-8D6D-AF90E4C38E51} = {22A8E5D9-22F3-4C6C-A0E5-7634DAA3B5C3}
 		{DEFD549E-AC86-42D3-B43C-9421A5075325} = {AAC691A1-67AA-4974-9CF6-B573E265F78B}
 		{33996D60-BFB0-4000-A4A2-A49241274F20} = {AAC691A1-67AA-4974-9CF6-B573E265F78B}
+		{E5F792B1-1AE6-4617-87B3-7E95052F05F9} = {66562722-5B96-4E3A-94A2-44D1808EF076}
+		{6E81ABFB-98A9-49E9-899F-11416E3CDF7F} = {30E8E2D0-F444-4BE7-8A45-29D8F4C6445D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8EE9DA79-94FF-4ABD-B8CB-8B6394632956}

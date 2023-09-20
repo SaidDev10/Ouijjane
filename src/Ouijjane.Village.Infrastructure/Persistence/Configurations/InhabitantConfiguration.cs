@@ -1,29 +1,34 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Ouijjane.Shared.Infrastructure.Persistence.Configuration;
 using Ouijjane.Village.Domain.Entities;
 
 namespace Ouijjane.Village.Infrastructure.Persistence.Configurations;
-public class InhabitantConfiguration : IEntityTypeConfiguration<Inhabitant>
+public class InhabitantConfiguration : AuditTypeConfiguration<Inhabitant>
 {
-    public void Configure(EntityTypeBuilder<Inhabitant> builder)
+    public override void Configure(EntityTypeBuilder<Inhabitant> builder)
     {
-        builder.ToTable(nameof(Inhabitant));
+        builder.ToTable(nameof(Inhabitant), SchemaNames.Dbo);
+
+        base.Configure(builder);
 
         builder.Property(x => x.FirstName)
-               .HasColumnType("nvarchar(100)")
+               .HasColumnType("varchar(100)")
                .IsRequired();
 
         builder.Property(x => x.LastName)
-               .HasColumnType("nvarchar(100)")
+               .HasColumnType("varchar(100)")
                .IsRequired();
 
         builder.Property(x => x.FatherName)
-               .HasColumnType("nvarchar(100)")
+               .HasColumnType("varchar(100)")
                .IsRequired();
 
         builder.Property(x => x.IsMarried)
                .HasDefaultValue(false)
                .IsRequired();
+
+        builder.HasIndex(x => new { x.LastName, x.FirstName });
 
     }
 }

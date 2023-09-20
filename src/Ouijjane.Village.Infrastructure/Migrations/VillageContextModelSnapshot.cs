@@ -36,44 +36,46 @@ namespace Ouijjane.Village.Infrastructure.Migrations
                     b.Property<DateOnly>("Birthdate")
                         .HasColumnType("date");
 
-                    b.Property<DateTime>("Created")
-                        .HasColumnType("timestamp with time zone");
+                    b.Property<int?>("CreatedByUserId")
+                        .HasColumnType("int");
 
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("text");
+                    b.Property<DateTime>("CreatedDateTime")
+                        .HasColumnType("timestamp");
 
                     b.Property<string>("Email")
                         .HasColumnType("text");
 
                     b.Property<string>("FatherName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("varchar(100)");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("varchar(100)");
 
                     b.Property<bool>("IsMarried")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("boolean")
                         .HasDefaultValue(false);
 
-                    b.Property<DateTime?>("LastModified")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("LastModifiedBy")
-                        .HasColumnType("text");
-
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("varchar(100)");
+
+                    b.Property<int?>("ModifiedByUserId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("ModifiedDateTime")
+                        .HasColumnType("timestamp");
 
                     b.Property<string>("Phone")
                         .HasColumnType("text");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Inhabitant", (string)null);
+                    b.HasIndex("LastName", "FirstName");
+
+                    b.ToTable("Inhabitant", "dbo");
                 });
 #pragma warning restore 612, 618
         }

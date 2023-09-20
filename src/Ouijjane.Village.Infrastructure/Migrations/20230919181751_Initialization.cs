@@ -12,36 +12,47 @@ namespace Ouijjane.Village.Infrastructure.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.EnsureSchema(
+                name: "dbo");
+
             migrationBuilder.CreateTable(
                 name: "Inhabitant",
+                schema: "dbo",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    FirstName = table.Column<string>(type: "nvarchar(100)", nullable: false),
-                    LastName = table.Column<string>(type: "nvarchar(100)", nullable: false),
-                    FatherName = table.Column<string>(type: "nvarchar(100)", nullable: false),
+                    FirstName = table.Column<string>(type: "varchar(100)", nullable: false),
+                    LastName = table.Column<string>(type: "varchar(100)", nullable: false),
+                    FatherName = table.Column<string>(type: "varchar(100)", nullable: false),
                     Email = table.Column<string>(type: "text", nullable: true),
                     Phone = table.Column<string>(type: "text", nullable: true),
                     Address = table.Column<string>(type: "text", nullable: true),
                     Birthdate = table.Column<DateOnly>(type: "date", nullable: false),
                     IsMarried = table.Column<bool>(type: "boolean", nullable: false, defaultValue: false),
-                    Created = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    CreatedBy = table.Column<string>(type: "text", nullable: true),
-                    LastModified = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    LastModifiedBy = table.Column<string>(type: "text", nullable: true)
+                    CreatedDateTime = table.Column<DateTime>(type: "timestamp", nullable: false),
+                    ModifiedDateTime = table.Column<DateTime>(type: "timestamp", nullable: true),
+                    CreatedByUserId = table.Column<int>(type: "int", nullable: true),
+                    ModifiedByUserId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Inhabitant", x => x.Id);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Inhabitant_LastName_FirstName",
+                schema: "dbo",
+                table: "Inhabitant",
+                columns: new[] { "LastName", "FirstName" });
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Inhabitant");
+                name: "Inhabitant",
+                schema: "dbo");
         }
     }
 }
