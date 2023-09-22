@@ -4,9 +4,11 @@ using Ouijjane.Village.WebApi.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddApplicationServices(builder.Configuration);
-builder.Services.AddInfrastructureServices();
-builder.Services.AddWebServices(builder.Environment);
+builder.AddConfigurations();//TODO: .RegisterSerilog();
+
+builder.Services.AddApplicationServices();
+builder.Services.AddInfrastructureServices(builder.Configuration);
+builder.Services.AddWebApiServices(builder.Environment);
 
 
 var app = builder.Build();

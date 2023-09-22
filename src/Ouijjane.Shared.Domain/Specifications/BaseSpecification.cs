@@ -56,9 +56,6 @@ public abstract class BaseSpecification<T> : ISpecification<T>
 
     protected void ApplyPaging(int pageNumber, int pageSize)
     {
-        pageNumber = pageNumber <= 0 ? 1 : pageNumber;
-        pageSize = pageSize <= 0 ? 10 : pageSize;
-
         Skip = (pageNumber - 1) * pageSize;
         Take = pageSize;
         IsPagingEnabled = true;

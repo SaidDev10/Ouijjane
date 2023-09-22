@@ -1,13 +1,13 @@
 ﻿using Microsoft.Extensions.Options;
-using Ouijjane.Shared.Application.Configurations;
 using Ouijjane.Shared.Application.Interfaces.Persistence.Factories;
+using Ouijjane.Shared.Infrastructure.Settings;
 
 namespace Ouijjane.Shared.Infrastructure.Persistence.Factories;
 public class DefaultDatabaseNameFactory : IDatabaseNameFactory
 {
-    private readonly MicroServiceConfiguration _microServiceConfiguration;
+    private readonly MicroServiceSettings _microServiceConfiguration;
 
-    public DefaultDatabaseNameFactory(IOptions<MicroServiceConfiguration> microServiceConfiguration)
+    public DefaultDatabaseNameFactory(IOptions<MicroServiceSettings> microServiceConfiguration)
     {
         _microServiceConfiguration = microServiceConfiguration.Value;
     }

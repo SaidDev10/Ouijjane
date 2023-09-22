@@ -20,7 +20,6 @@
     <PackageReference Include="Mapster" Version="7.4.0-pre06" />
     <PackageReference Include="MediatR" Version="12.1.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.0-rc.1.23419.6" />
-    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="8.0.0-rc.1.23419.4" />
   </ItemGroup>
 
   <ItemGroup>

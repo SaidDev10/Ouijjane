@@ -4,7 +4,7 @@ namespace Ouijjane.Village.WebApi.Extensions;
 
 public static class ServiceCollectionExtensions
 {
-    public static void AddWebServices(this IServiceCollection services, IWebHostEnvironment environment)
+    public static void AddWebApiServices(this IServiceCollection services, IWebHostEnvironment environment)
     {
         services.AddDatabaseDeveloperPageExceptionFilter();
         

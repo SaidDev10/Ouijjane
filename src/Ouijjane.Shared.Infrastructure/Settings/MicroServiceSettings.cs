@@ -1,5 +1,5 @@
-﻿namespace Ouijjane.Shared.Application.Configurations;
-public class MicroServiceConfiguration
+﻿namespace Ouijjane.Shared.Infrastructure.Settings;
+public class MicroServiceSettings
 {
     public string? Product { get; set; }
 

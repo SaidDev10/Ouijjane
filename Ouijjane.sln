@@ -40,10 +40,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastru
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{E5F792B1-1AE6-4617-87B3-7E95052F05F9}"
 	ProjectSection(SolutionItems) = preProject
-		Dockerfile = Dockerfile
+		src\Dockerfile = src\Dockerfile
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ouijjane.Village.Database", "src\Ouijjane.Village.Database\Ouijjane.Village.Database.csproj", "{6E81ABFB-98A9-49E9-899F-11416E3CDF7F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ouijjane.Village.Database", "src\Ouijjane.Village.Database\Ouijjane.Village.Database.csproj", "{6E81ABFB-98A9-49E9-899F-11416E3CDF7F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

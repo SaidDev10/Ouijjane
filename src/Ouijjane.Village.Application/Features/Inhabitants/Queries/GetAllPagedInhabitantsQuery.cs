@@ -12,8 +12,8 @@ namespace Ouijjane.Village.Application.Features.Inhabitants.Queries;
 
 public record GetAllPagedInhabitantsQuery : IRequest<PaginatedResult<GetAllPagedInhabitantsResponse>>
 {
-    public int PageNumber { get; set; }
-    public int PageSize { get; set; }
+    public int? PageNumber { get; set; }
+    public int? PageSize { get; set; }
     public string? SearchString { get; set; }
     public string? SortColumn { get; set; } 
     public string? SortOrder { get; set; } // [asc|desc]
@@ -51,17 +51,20 @@ internal class GetAllPagedInhabitantsQueryHandler : IRequestHandler<GetAllPagedI
 
     public async Task<PaginatedResult<GetAllPagedInhabitantsResponse>> Handle(GetAllPagedInhabitantsQuery request, CancellationToken cancellationToken)
     {
+        var pageNumber = request.PageNumber.HasValue ? request.PageNumber.Value : 0;
+        var pageSize = request.PageSize.HasValue ? request.PageSize.Value : 10;
+
         Expression<Func<Inhabitant, GetAllPagedInhabitantsResponse>> expression = e => e.Adapt<GetAllPagedInhabitantsResponse>();
 
         var inhabitants = await _unitOfWork.Repository<Inhabitant>()
                    .FindQueryable(new FindAllInhabitantsSpecification()
                                     .ApplyFilter(request.SearchString!)
-                                    .ApplyPagination(request.PageNumber, request.PageSize)
+                                    .ApplyPagination(pageNumber, pageSize)
                                     .ApplyOrder(request.SortColumn!, request.SortOrder!))
                    .Select(expression)
                    .ToListAsync(cancellationToken);
 
-        return PaginatedResult<GetAllPagedInhabitantsResponse>.Success(inhabitants, inhabitants.Count, request.PageNumber, request.PageSize);
+        return PaginatedResult<GetAllPagedInhabitantsResponse>.Success(inhabitants, inhabitants.Count, pageNumber, pageSize);
     }
 }
 

@@ -10,9 +10,6 @@ public class PaginatedResult<T> : Result
 
     internal PaginatedResult(bool succeeded, List<T> data = default, List<string> messages = null, int count = 0, int pageNumber = 1, int pageSize = 10)
     {
-        pageNumber = pageNumber <= 0 ? 1 : pageNumber;
-        pageSize = pageSize <= 0 ? 10 : pageSize;
-
         Data = data;
         CurrentPage = pageNumber;
         Succeeded = succeeded;
