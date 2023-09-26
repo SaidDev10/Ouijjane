@@ -1,39 +1,23 @@
 ﻿using FluentValidation;
 using Mapster;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using Ouijjane.Shared.Application.Interfaces.Persistence.Repositories;
-using Ouijjane.Shared.Application.Wrapper;
+using Ouijjane.Shared.Application.Models.Pagination;
+using Ouijjane.Village.Application.Specifications.Inhabitants;
 using Ouijjane.Village.Domain.Entities;
-using Ouijjane.Village.Domain.Specifications;
+using Ouijjane.Shared.Application.Extenstions;
 using System.Linq.Expressions;
 
 namespace Ouijjane.Village.Application.Features.Inhabitants.Queries;
 
-public record GetAllPagedInhabitantsQuery : IRequest<PaginatedResult<GetAllPagedInhabitantsResponse>>
+public record GetAllPagedInhabitantsQuery : PaginationFilter, IRequest<PaginatedResult<GetAllPagedInhabitantsResponse>>
 {
-    public int? PageNumber { get; set; }
-    public int? PageSize { get; set; }
-    public string? SearchString { get; set; }
-    public string? SortColumn { get; set; } 
-    public string? SortOrder { get; set; } // [asc|desc]
-
 }
 
 public class GetAllPagedInhabitantsQueryValidator : AbstractValidator<GetAllPagedInhabitantsQuery>
 {
     public GetAllPagedInhabitantsQueryValidator()
     {
-        RuleFor(x => x.SortColumn)
-            .NotEmpty()
-            .WithMessage("Both SortColumn and SortOrder must be set or neither of them.")
-            .When(x => !string.IsNullOrEmpty(x?.SortOrder));
-
-        RuleFor(x => x.SortOrder)
-            .NotEmpty()
-            .WithMessage("Both SortColumn and SortOrder must be set or neither of them.")
-            .When(x => !string.IsNullOrEmpty(x?.SortColumn));
-
         RuleFor(x => x.SortOrder)
             .Must(sortOrder => sortOrder == "asc" || sortOrder == "desc")
             .WithMessage("SortOrder must be 'asc' or 'desc'.")
@@ -51,20 +35,12 @@ internal class GetAllPagedInhabitantsQueryHandler : IRequestHandler<GetAllPagedI
 
     public async Task<PaginatedResult<GetAllPagedInhabitantsResponse>> Handle(GetAllPagedInhabitantsQuery request, CancellationToken cancellationToken)
     {
-        var pageNumber = request.PageNumber.HasValue ? request.PageNumber.Value : 0;
-        var pageSize = request.PageSize.HasValue ? request.PageSize.Value : 10;
-
         Expression<Func<Inhabitant, GetAllPagedInhabitantsResponse>> expression = e => e.Adapt<GetAllPagedInhabitantsResponse>();
 
-        var inhabitants = await _unitOfWork.Repository<Inhabitant>()
-                   .FindQueryable(new FindAllInhabitantsSpecification()
-                                    .ApplyFilter(request.SearchString!)
-                                    .ApplyPagination(pageNumber, pageSize)
-                                    .ApplyOrder(request.SortColumn!, request.SortOrder!))
+        return await _unitOfWork.Repository<Inhabitant>()
+                   .FindQueryable(new FindAllInhabitantsWithPaginationFilterSpec(request))
                    .Select(expression)
-                   .ToListAsync(cancellationToken);
-
-        return PaginatedResult<GetAllPagedInhabitantsResponse>.Success(inhabitants, inhabitants.Count, pageNumber, pageSize);
+                   .ToPaginatedListAsync(request);
     }
 }
 

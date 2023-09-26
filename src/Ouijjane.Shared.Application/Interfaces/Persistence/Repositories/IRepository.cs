@@ -1,4 +1,4 @@
-﻿using Ouijjane.Shared.Domain.Specifications;
+﻿using Ouijjane.Shared.Application.Specifications;
 using System.Linq.Expressions;
 
 namespace Ouijjane.Shared.Application.Interfaces.Persistence.Repositories;

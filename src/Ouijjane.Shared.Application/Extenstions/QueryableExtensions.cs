@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Ouijjane.Shared.Application.Models.Pagination;
 using Ouijjane.Shared.Application.Specifications;
-using Ouijjane.Shared.Domain.Specifications;
 
-namespace Ouijjane.Shared.Infrastructure.Extensions;
+namespace Ouijjane.Shared.Application.Extenstions;
 public static class QueryableExtensions
 {
     public static IQueryable<T> Specify<T>(this IQueryable<T> inputQuery, ISpecification<T>? specification) where T : class
@@ -21,10 +21,10 @@ public static class QueryableExtensions
             query = query.Where(criteria);
         }
 
-        if (specification.SplitQuery)
-        {
-            query = query.AsSplitQuery();
-        }
+        //if (specification.SplitQuery)
+        //{
+        //    query = query.AsSplitQuery();
+        //}
 
         query = specification.Includes.Aggregate(query, (current, include) => current.Include(include));
         query = specification.IncludeStrings.Aggregate(query, (current, include) => current.Include(include));
@@ -49,8 +49,8 @@ public static class QueryableExtensions
 
         if (specification.IsPagingEnabled)
         {
-            query = specification.Skip > 0 
-                ? query.Skip(specification.Skip).Take(specification.Take) 
+            query = specification.Skip > 0
+                ? query.Skip(specification.Skip).Take(specification.Take)
                 : query.Take(specification.Take);
         }
 
@@ -60,5 +60,18 @@ public static class QueryableExtensions
         }
 
         return query;
+    }
+
+    public static async Task<PaginatedResult<T>> ToPaginatedListAsync<T>(this IQueryable<T> source, PaginationFilter filter) where T : class
+    {
+        if (source == null) throw new Exception();
+
+        int pageNumber = (!filter.PageNumber.HasValue || filter.PageNumber.Value <= 0) ? 1 : filter.PageNumber.Value;
+        int pageSize = (!filter.PageSize.HasValue || filter.PageSize.Value <= 0) ? 10 : filter.PageSize.Value;
+
+        var items = await source.ToListAsync();
+        var count = await source.CountAsync();
+
+        return PaginatedResult<T>.Success(items, count, pageNumber, pageSize);
     }
 }

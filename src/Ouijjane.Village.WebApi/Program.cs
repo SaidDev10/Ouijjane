@@ -16,3 +16,5 @@ var app = builder.Build();
 await app.UseWebMiddleware(app.Environment);
 
 app.Run();
+
+public partial class Program { }

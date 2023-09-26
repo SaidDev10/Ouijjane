@@ -1,6 +1,6 @@
 ﻿using System.Linq.Expressions;
 
-namespace Ouijjane.Shared.Domain.Specifications;
+namespace Ouijjane.Shared.Application.Specifications;
 public abstract class BaseSpecification<T> : ISpecification<T>
 {
     public List<Expression<Func<T, bool>>> Criteria { get; } = new();
@@ -27,7 +27,7 @@ public abstract class BaseSpecification<T> : ISpecification<T>
 
     public bool IsReadOnly { get; private set; }
 
-    public bool SplitQuery { get; private set; }
+    //public bool SplitQuery { get; private set; }
 
     protected BaseSpecification(Expression<Func<T, bool>> criteria)
     {
@@ -56,9 +56,9 @@ public abstract class BaseSpecification<T> : ISpecification<T>
 
     protected void ApplyPaging(int pageNumber, int pageSize)
     {
+        IsPagingEnabled = true;
         Skip = (pageNumber - 1) * pageSize;
         Take = pageSize;
-        IsPagingEnabled = true;
     }
 
     protected void ApplyDistinct()
@@ -91,8 +91,8 @@ public abstract class BaseSpecification<T> : ISpecification<T>
         GroupBy = groupByExpression;
     }
 
-    protected void AsSplitQuery(bool splitQuery)
-    {
-        SplitQuery = splitQuery;
-    }
+    //protected void AsSplitQuery(bool splitQuery)
+    //{
+    //    SplitQuery = splitQuery;
+    //}
 }

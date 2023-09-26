@@ -1,4 +1,4 @@
-﻿namespace Ouijjane.Shared.Application.Wrapper;
+﻿namespace Ouijjane.Shared.Application.Models.Pagination;
 
 public interface IResult
 {

@@ -8,11 +8,8 @@
 
   <ItemGroup>
     <Compile Remove="Enums\**" />
-    <Compile Remove="Specifications\**" />
     <EmbeddedResource Remove="Enums\**" />
-    <EmbeddedResource Remove="Specifications\**" />
     <None Remove="Enums\**" />
-    <None Remove="Specifications\**" />
   </ItemGroup>
 
   <ItemGroup>

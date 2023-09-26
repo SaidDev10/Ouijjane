@@ -1,4 +1,4 @@
-﻿namespace Ouijjane.Shared.Application.Wrapper;
+﻿namespace Ouijjane.Shared.Application.Models.Pagination;
 public class PaginatedResult<T> : Result
 {
     public PaginatedResult(List<T> data)
@@ -14,7 +14,7 @@ public class PaginatedResult<T> : Result
         CurrentPage = pageNumber;
         Succeeded = succeeded;
         PageSize = pageSize;
-        TotalPages = (int)Math.Ceiling(count / (double)pageSize);
+        TotalPages = count == 0 ? 1 : (int)Math.Ceiling(count / (double)pageSize);
         TotalCount = count;
     }
 

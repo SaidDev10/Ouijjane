@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Ouijjane.Shared.Application.Extenstions;
 using Ouijjane.Shared.Application.Interfaces.Persistence.Repositories;
-using Ouijjane.Shared.Domain.Specifications;
-using Ouijjane.Shared.Infrastructure.Extensions;
+using Ouijjane.Shared.Application.Specifications;
 using System.Linq.Expressions;
 
 namespace Ouijjane.Shared.Infrastructure.Persistence.Repositories;

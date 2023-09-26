@@ -7,12 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Specifications\**" />
-    <EmbeddedResource Remove="Specifications\**" />
-    <None Remove="Specifications\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Ouijjane.Shared.Application\Ouijjane.Shared.Application.csproj" />
     <ProjectReference Include="..\Ouijjane.Village.Domain\Ouijjane.Village.Domain.csproj" />
   </ItemGroup>

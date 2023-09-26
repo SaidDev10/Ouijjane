@@ -1,6 +1,6 @@
 ﻿using System.Linq.Expressions;
 
-namespace Ouijjane.Shared.Domain.Specifications;
+namespace Ouijjane.Shared.Application.Specifications;
 public interface ISpecification<T>
 {
     List<Expression<Func<T, bool>>> Criteria { get; }
@@ -27,5 +27,5 @@ public interface ISpecification<T>
 
     bool IsReadOnly { get; }
 
-    bool SplitQuery { get; }
+    //bool SplitQuery { get; }
 }
