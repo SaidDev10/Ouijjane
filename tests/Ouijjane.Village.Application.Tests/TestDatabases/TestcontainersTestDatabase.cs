@@ -1,5 +1,5 @@
-﻿using Microsoft.Data.SqlClient;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using Npgsql;
 using Ouijjane.Village.Infrastructure.Persistence;
 using Respawn;
 using System.Data.Common;
@@ -26,7 +26,8 @@ public class TestcontainersTestDatabase : ITestDatabase
 
         _connectionString = _container.GetConnectionString();
 
-        _connection = new SqlConnection(_connectionString);
+        _connection = new NpgsqlConnection(_connectionString);
+        await _connection.OpenAsync();
 
         var options = new DbContextOptionsBuilder<VillageContext>()
             .UseNpgsql(_connectionString)
@@ -36,10 +37,11 @@ public class TestcontainersTestDatabase : ITestDatabase
 
         context.Database.Migrate();
 
-        _respawner = await Respawner.CreateAsync(_connectionString, new RespawnerOptions
+        _respawner = await Respawner.CreateAsync(_connection, new RespawnerOptions
         {
             TablesToIgnore = ["__EFMigrationsHistory"],
-            SchemasToExclude = ["grate"]
+            SchemasToExclude = ["grate"],
+            DbAdapter = DbAdapter.Postgres
         });
     }
 
@@ -47,7 +49,7 @@ public class TestcontainersTestDatabase : ITestDatabase
 
     public async Task ResetAsync()
     {
-        await _respawner.ResetAsync(_connectionString);
+        await _respawner.ResetAsync(_connection);
     }
 
     public async Task DisposeAsync()

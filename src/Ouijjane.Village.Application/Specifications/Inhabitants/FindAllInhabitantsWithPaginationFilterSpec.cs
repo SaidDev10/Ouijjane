@@ -1,4 +1,4 @@
-﻿using Ouijjane.Shared.Application.Models.Pagination;
+﻿using Ouijjane.Shared.Application.Models.Result.Pagination;
 using Ouijjane.Shared.Application.Specifications;
 using Ouijjane.Village.Domain.Entities;
 using System.Linq.Expressions;

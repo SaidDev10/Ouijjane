@@ -1,4 +1,4 @@
-﻿namespace Ouijjane.Shared.Application.Models.Pagination;
+﻿namespace Ouijjane.Shared.Application.Models.Result;
 public class Result : IResult
 {
     public Result()

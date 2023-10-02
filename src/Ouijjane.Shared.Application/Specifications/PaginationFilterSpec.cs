@@ -1,5 +1,5 @@
 ﻿using Ouijjane.Shared.Application.Constants;
-using Ouijjane.Shared.Application.Models.Pagination;
+using Ouijjane.Shared.Application.Models.Result.Pagination;
 using Ouijjane.Shared.Domain.Entities;
 using System.Linq.Expressions;
 

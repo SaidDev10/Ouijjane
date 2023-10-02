@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.Configuration;
-using Ouijjane.Shared.Application.Interfaces.Persistence.Factories;
+﻿using Ouijjane.Shared.Application.Interfaces.Persistence.Factories;
 using Npgsql;
 using Microsoft.Extensions.Options;
 using Ouijjane.Shared.Infrastructure.Settings;

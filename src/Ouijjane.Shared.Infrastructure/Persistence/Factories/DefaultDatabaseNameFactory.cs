@@ -5,9 +5,9 @@ using Ouijjane.Shared.Infrastructure.Settings;
 namespace Ouijjane.Shared.Infrastructure.Persistence.Factories;
 public class DefaultDatabaseNameFactory : IDatabaseNameFactory
 {
-    private readonly MicroServiceSettings _microServiceConfiguration;
+    private readonly MicroserviceSettings _microServiceConfiguration;
 
-    public DefaultDatabaseNameFactory(IOptions<MicroServiceSettings> microServiceConfiguration)
+    public DefaultDatabaseNameFactory(IOptions<MicroserviceSettings> microServiceConfiguration)
     {
         _microServiceConfiguration = microServiceConfiguration.Value;
     }

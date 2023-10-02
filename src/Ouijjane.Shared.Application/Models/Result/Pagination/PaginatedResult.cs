@@ -1,4 +1,4 @@
-﻿namespace Ouijjane.Shared.Application.Models.Pagination;
+﻿namespace Ouijjane.Shared.Application.Models.Result.Pagination;
 public class PaginatedResult<T> : Result
 {
     public PaginatedResult(List<T> data)

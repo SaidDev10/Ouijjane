@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Ouijjane.Shared.Application.Models.Pagination;
+using Ouijjane.Shared.Application.Models.Result.Pagination;
 using Ouijjane.Shared.Application.Specifications;
 
 namespace Ouijjane.Shared.Application.Extenstions;

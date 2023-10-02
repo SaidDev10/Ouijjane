@@ -13,6 +13,7 @@ builder.Services.AddWebApiServices(builder.Environment);
 
 var app = builder.Build();
 
+//TODO: redo it in a clean way
 await app.UseWebMiddleware(app.Environment);
 
 app.Run();

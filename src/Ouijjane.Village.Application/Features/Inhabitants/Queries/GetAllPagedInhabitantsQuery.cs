@@ -2,11 +2,11 @@
 using Mapster;
 using MediatR;
 using Ouijjane.Shared.Application.Interfaces.Persistence.Repositories;
-using Ouijjane.Shared.Application.Models.Pagination;
 using Ouijjane.Village.Application.Specifications.Inhabitants;
 using Ouijjane.Village.Domain.Entities;
 using Ouijjane.Shared.Application.Extenstions;
 using System.Linq.Expressions;
+using Ouijjane.Shared.Application.Models.Result.Pagination;
 
 namespace Ouijjane.Village.Application.Features.Inhabitants.Queries;
 
@@ -18,10 +18,7 @@ public class GetAllPagedInhabitantsQueryValidator : AbstractValidator<GetAllPage
 {
     public GetAllPagedInhabitantsQueryValidator()
     {
-        RuleFor(x => x.SortOrder)
-            .Must(sortOrder => sortOrder == "asc" || sortOrder == "desc")
-            .WithMessage("SortOrder must be 'asc' or 'desc'.")
-            .When(x => !string.IsNullOrEmpty(x?.SortOrder));
+        Include(new PaginationFilterValidator());
     }
 }
 

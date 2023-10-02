@@ -2,7 +2,7 @@
 using Ouijjane.Village.Application.Tests.Builders;
 using static Ouijjane.Village.Application.Tests.FunctionalTestFixture;
 
-namespace Ouijjane.Village.Application.Tests.Features.Inhabitants.Queries;
+namespace Ouijjane.Village.Application.Tests.FunctionalTests.Features.Inhabitants.Queries;
 
 [Collection("Functional test collection")]
 public class GetAllPagedInhabitantsTests : IAsyncLifetime

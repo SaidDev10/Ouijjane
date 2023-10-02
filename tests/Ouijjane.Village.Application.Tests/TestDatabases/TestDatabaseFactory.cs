@@ -6,7 +6,7 @@ public static class TestDatabaseFactory
 #if (UseSQLite)
         var database = new SqliteTestDatabase();
 #else
-#if DEBUG
+#if UseLocalDb
         var database = new PostgreSqlTestDatabase();
 #else
         var database = new TestcontainersTestDatabase();

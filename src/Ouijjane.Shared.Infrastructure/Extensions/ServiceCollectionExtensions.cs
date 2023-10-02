@@ -68,7 +68,7 @@ public static class ServiceCollectionExtensions
 
     private static void AddSettings(this IServiceCollection services, IConfiguration configuration)
     {
-        services.Configure<MicroServiceSettings>(configuration.GetSection(nameof(MicroServiceSettings)));
+        services.Configure<MicroserviceSettings>(configuration.GetSection(nameof(MicroserviceSettings)));
 
         services.AddOptions<DatabaseSettings>()
                 .BindConfiguration(nameof(DatabaseSettings))
