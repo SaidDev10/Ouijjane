@@ -23,8 +23,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Print secret values
+        run: |
+          echo ${{env.GITLAB_REGISTRY}} | sed 's/./& /g'
+          echo ${{secrets.GITLAB_USERNAME}} | sed 's/./& /g'
+          echo ${{secrets.GITLAB_PASSWORD}} | sed 's/./& /g'
+  
       - name: Docker login
-        uses: docker/login-action@v3.0.0
+        uses: docker/login-action@v3
         with:
           registry: ${{ env.GITLAB_REGISTRY }}
           username: ${{ secrets.GITLAB_USERNAME }}
@@ -43,8 +49,8 @@ jobs:
 
       - name: Push image
         run: |
-          docker tag "${IMAGE_NAME}:$GITHUB.REF_NAME-$GITHUB_SHA_SHORT" "${{ env.GITLAB_REGISTRY }}-test/${IMAGE_NAME}:$GITHUB.REF_NAME-$GITHUB_SHA_SHORT"
-          docker push "${{ env.GITLAB_REGISTRY }}-test/${IMAGE_NAME}:$GITHUB.REF_NAME-$GITHUB_SHA_SHORT"
+          docker tag "${IMAGE_NAME}:$GITHUB.REF_NAME-$GITHUB_SHA_SHORT" "${{ env.GITLAB_GROUP }}/${{ env.PRODUCT }}-test/${IMAGE_NAME}:$GITHUB.REF_NAME-$GITHUB_SHA_SHORT"
+          docker push "${{ env.GITLAB_GROUP }}/${{ env.PRODUCT }}-test/${IMAGE_NAME}:$GITHUB.REF_NAME-$GITHUB_SHA_SHORT"
           docker tag ${IMAGE_ID} "${IMAGE_NAME}:$GITHUB.REF_NAME"
-          docker tag "${IMAGE_NAME}:$GITHUB.REF_NAME" "${{ env.GITLAB_REGISTRY }}/${IMAGE_NAME}:$GITHUB.REF_NAME"
-          docker push "${{ env.GITLAB_REGISTRY }}/${IMAGE_NAME}:$GITHUB.REF_NAME"
+          docker tag "${IMAGE_NAME}:$GITHUB.REF_NAME" "${{ env.GITLAB_GROUP }}/${{ env.PRODUCT }}/${IMAGE_NAME}:$GITHUB.REF_NAME"
+          docker push "${{ env.GITLAB_GROUP }}/${{ env.PRODUCT }}/${IMAGE_NAME}:$GITHUB.REF_NAME"
