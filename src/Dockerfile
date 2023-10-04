@@ -6,7 +6,7 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 as build
 ARG MICROSVC
-ARG CSRPOJ
+ARG CSPROJ
 WORKDIR /src
 COPY . .
 RUN dotnet restore ${MICROSVC}/${CSRPOJ}
