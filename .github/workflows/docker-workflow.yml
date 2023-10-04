@@ -39,7 +39,7 @@ jobs:
           echo "GITHUB_SHA_SHORT=$(echo $GITHUB_SHA | cut -c 1-6)" >> $GITHUB_ENV
 
       - name: Build image
-        run: echo "IMAGE_ID=$(echo $(docker build -f ./src/Dockerfile -t ${IMAGE_NAME}:$GITHUB.REF_NAME-$GITHUB_SHA_SHORT --build-arg ${CSPROJPATH} --build-arg ${ASSEMBLY} --build-arg ${MICROSVC} --build-arg ${CSPROJ} . | awk '/Successfully built/{print $NF}'))"
+        run: echo "IMAGE_ID=$(echo $(docker build -f ./src/Dockerfile -t ${IMAGE_NAME}:$GITHUB.REF_NAME-$GITHUB_SHA_SHORT --build-arg ${ASSEMBLY} --build-arg ${MICROSVC} --build-arg ${CSPROJ} . | awk '/Successfully built/{print $NF}'))"
 
       - name: Push image
         run: |
