@@ -9,7 +9,7 @@ ARG MICROSVC
 ARG CSPROJ
 WORKDIR /src
 COPY . .
-RUN dotnet restore ${MICROSVC}/${CSRPOJ}
+RUN dotnet restore ${MICROSVC}/${CSPROJ}
 WORKDIR /src/${MICROSVC}
 RUN dotnet build ${CSPROJ} -c Release -o /app/build --verbosity minimal
 
@@ -35,7 +35,7 @@ RUN chmod +x ./entrypoint.sh
 #ENV MicroService__Component=api
 #ENV MicroService__Version=1.0.0
 #ENV MicroService__Namespace=local
-##docker build . -t xxx-my_tag-xxx --build-arg MICROSVC=Ouijjane.Village.WebApi --build-arg CSRPOJ=Ouijjane.Village.WebApi.csproj --build-arg ASSEMBLY=Ouijjane.Village.WebApi.dll
+##docker build . -t xxx-my_tag-xxx --build-arg MICROSVC=Ouijjane.Village.WebApi --build-arg CSPROJ=Ouijjane.Village.WebApi.csproj --build-arg ASSEMBLY=Ouijjane.Village.WebApi.dll
 ##docker run --name webapi -p 5000:80 -d xxx-my_tag-xxx    (http://localhost:5000/api/inhabitants)
 
 ENTRYPOINT ["./entrypoint.sh"]
