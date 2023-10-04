@@ -32,10 +32,10 @@ jobs:
 
       - name: Set parameters
         run: |
-          echo "IMAGE_NAME=$(echo ${{ env.PRODUCT }}/${{ inputs.PROJECT_MODULE }}-${{ inputs.PROJECT_COMPONENT }} | tr A-Z a-z)" >> "$GITHUB_ENV"
-          echo "MICROSVC=$(echo ${{ inputs.PROJECT_SUBPATH }}.${{ env.PRODUCT }}.${{ inputs.PROJECT_MODULE }}.${{ inputs.PROJECT_COMPONENT }}) >> "$GITHUB_ENV"
-          echo "CSPROJ=$(echo ${{ env.PRODUCT }}.${{ inputs.PROJECT_MODULE }}.${{ inputs.PROJECT_COMPONENT }}.csproj" >> "$GITHUB_ENV"
-          echo "ASSEMBLY=$(echo ${{ env.PRODUCT }}.${{ inputs.PROJECT_MODULE }}.${{ inputs.PROJECT_COMPONENT }}.dll" >> "$GITHUB_ENV"
+          echo "IMAGE_NAME=$(echo ${{ vars.PRODUCT }}/${{ inputs.PROJECT_MODULE }}-${{ inputs.PROJECT_COMPONENT }} | tr A-Z a-z)" >> "$GITHUB_ENV"
+          echo "MICROSVC=$(echo ${{ inputs.PROJECT_SUBPATH }}.${{ vars.PRODUCT }}.${{ inputs.PROJECT_MODULE }}.${{ inputs.PROJECT_COMPONENT }})" >> "$GITHUB_ENV"
+          echo "CSPROJ=$(echo ${{ vars.PRODUCT }}.${{ inputs.PROJECT_MODULE }}.${{ inputs.PROJECT_COMPONENT }}.csproj)" >> "$GITHUB_ENV"
+          echo "ASSEMBLY=$(echo ${{ vars.PRODUCT }}.${{ inputs.PROJECT_MODULE }}.${{ inputs.PROJECT_COMPONENT }}.dll)" >> "$GITHUB_ENV"
           echo "GITHUB_SHA_SHORT=$(echo $GITHUB_SHA | cut -c 1-6)" >> $GITHUB_ENV
 
       - name: Build image
@@ -43,8 +43,8 @@ jobs:
 
       - name: Push image
         run: |
-          docker tag "${IMAGE_NAME}:$GITHUB.REF_NAME-$GITHUB_SHA_SHORT" "${{ env.GITLAB_GROUP }}/${{ env.PRODUCT }}-test/${IMAGE_NAME}:$GITHUB.REF_NAME-$GITHUB_SHA_SHORT"
-          docker push "${{ env.GITLAB_GROUP }}/${{ env.PRODUCT }}-test/${IMAGE_NAME}:$GITHUB.REF_NAME-$GITHUB_SHA_SHORT"
+          docker tag "${IMAGE_NAME}:$GITHUB.REF_NAME-$GITHUB_SHA_SHORT" "${{ vars.GITLAB_GROUP }}/${{ vars.PRODUCT }}-test/${IMAGE_NAME}:$GITHUB.REF_NAME-$GITHUB_SHA_SHORT"
+          docker push "${{ vars.GITLAB_GROUP }}/${{ vars.PRODUCT }}-test/${IMAGE_NAME}:$GITHUB.REF_NAME-$GITHUB_SHA_SHORT"
           docker tag ${IMAGE_ID} "${IMAGE_NAME}:$GITHUB.REF_NAME"
-          docker tag "${IMAGE_NAME}:$GITHUB.REF_NAME" "${{ env.GITLAB_GROUP }}/${{ env.PRODUCT }}/${IMAGE_NAME}:$GITHUB.REF_NAME"
-          docker push "${{ env.GITLAB_GROUP }}/${{ env.PRODUCT }}/${IMAGE_NAME}:$GITHUB.REF_NAME"
+          docker tag "${IMAGE_NAME}:$GITHUB.REF_NAME" "${{ vars.GITLAB_GROUP }}/${{ vars.PRODUCT }}/${IMAGE_NAME}:$GITHUB.REF_NAME"
+          docker push "${{ vars.GITLAB_GROUP }}/${{ vars.PRODUCT }}/${IMAGE_NAME}:$GITHUB.REF_NAME"
