@@ -40,7 +40,7 @@ jobs:
 
       - name: Build image
         working-directory: ./src/
-        run: echo "IMAGE_ID=$(echo $(docker build -t $IMAGE_NAME:${{ GITHUB.REF_NAME }}-$GITHUB_SHA_SHORT --build-arg ${ASSEMBLY} --build-arg ${MICROSVC} --build-arg ${CSPROJ} . | awk '/Successfully built/{print $NF}'))"
+        run: echo "IMAGE_ID=$(echo $(docker build -t $IMAGE_NAME:${{ GITHUB.REF_NAME }}-$GITHUB_SHA_SHORT --build-arg ASSEMBLY=${ASSEMBLY} --build-arg MICROSVC=${MICROSVC} --build-arg CSPROJ=${CSPROJ} . | awk '/Successfully built/{print $NF}'))"
 
       - name: Push image
         run: |
