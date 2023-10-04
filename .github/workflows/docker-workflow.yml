@@ -39,12 +39,12 @@ jobs:
           echo "GITHUB_SHA_SHORT=$(echo $GITHUB_SHA | cut -c 1-6)" >> $GITHUB_ENV
 
       - name: Build image
-        run: echo "IMAGE_ID=$(echo $(docker build -f ./src/Dockerfile -t ${IMAGE_NAME}:$GITHUB.REF_NAME-$GITHUB_SHA_SHORT --build-arg ${ASSEMBLY} --build-arg ${MICROSVC} --build-arg ${CSPROJ} . | awk '/Successfully built/{print $NF}'))"
+        run: echo "IMAGE_ID=$(echo $(docker build -f ./src/Dockerfile -t ${IMAGE_NAME}:${{ GITHUB.REF_NAME }}-${{ GITHUB_SHA_SHORT }} --build-arg ${ASSEMBLY} --build-arg ${MICROSVC} --build-arg ${CSPROJ} . | awk '/Successfully built/{print $NF}'))"
 
       - name: Push image
         run: |
-          docker tag "${IMAGE_NAME}:$GITHUB.REF_NAME-$GITHUB_SHA_SHORT" "${{ vars.GITLAB_GROUP }}/${{ vars.PRODUCT }}-test/${IMAGE_NAME}:$GITHUB.REF_NAME-$GITHUB_SHA_SHORT"
-          docker push "${{ vars.GITLAB_GROUP }}/${{ vars.PRODUCT }}-test/${IMAGE_NAME}:$GITHUB.REF_NAME-$GITHUB_SHA_SHORT"
-          docker tag ${IMAGE_ID} "${IMAGE_NAME}:$GITHUB.REF_NAME"
-          docker tag "${IMAGE_NAME}:$GITHUB.REF_NAME" "${{ vars.GITLAB_GROUP }}/${{ vars.PRODUCT }}/${IMAGE_NAME}:$GITHUB.REF_NAME"
-          docker push "${{ vars.GITLAB_GROUP }}/${{ vars.PRODUCT }}/${IMAGE_NAME}:$GITHUB.REF_NAME"
+          docker tag "${IMAGE_NAME}:${{ GITHUB.REF_NAME }}-${{ GITHUB_SHA_SHORT }}" "${{ vars.GITLAB_GROUP }}/${{ vars.PRODUCT }}-test/${IMAGE_NAME}:${{ GITHUB.REF_NAME }}-${{ GITHUB_SHA_SHORT }}"
+          docker push "${{ vars.GITLAB_GROUP }}/${{ vars.PRODUCT }}-test/${IMAGE_NAME}:${{ GITHUB.REF_NAME }}-${{ GITHUB_SHA_SHORT }}"
+          docker tag ${IMAGE_ID} "${IMAGE_NAME}:${{ GITHUB.REF_NAME }}"
+          docker tag "${IMAGE_NAME}:${{ GITHUB.REF_NAME }}" "${{ vars.GITLAB_GROUP }}/${{ vars.PRODUCT }}/${IMAGE_NAME}:${{ GITHUB.REF_NAME }}"
+          docker push "${{ vars.GITLAB_GROUP }}/${{ vars.PRODUCT }}/${IMAGE_NAME}:${{ GITHUB.REF_NAME }}"
