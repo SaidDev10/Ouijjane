@@ -47,7 +47,7 @@ jobs:
       - name: Build Village image
         if: github.event.inputs.build_village_image == 'true' || github.ref == 'refs/heads/main'
         # uses: ./.github/workflows/docker-workflow.yml
-        uses: SaidDev10/Ouijjane/.github/workflows/docker-workflow.yml
+        uses: SaidDev10/Ouijjane/.github/workflows/docker-workflow.yml@main
         with:
           PROJECT_MODULE: "village"
           PROJECT_COMPONENT: "api"
