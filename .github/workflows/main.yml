@@ -40,6 +40,7 @@ jobs:
           PROJECT_MODULE: "village"
           PROJECT_COMPONENT: "api"
           PROJECT_SUBPATH: ""
+    secrets: inherit
 
   # docker:
   #   name: Docker
