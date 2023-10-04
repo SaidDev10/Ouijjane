@@ -23,16 +23,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Print secret values
-        run: |
-          echo ${{env.GITLAB_REGISTRY}} | sed 's/./& /g'
-          echo ${{secrets.GITLAB_USERNAME}} | sed 's/./& /g'
-          echo ${{secrets.GITLAB_PASSWORD}} | sed 's/./& /g'
-  
       - name: Docker login
         uses: docker/login-action@v3
         with:
-          registry: ${{ env.GITLAB_REGISTRY }}
+          registry: registry.gitlab.com
           username: ${{ secrets.GITLAB_USERNAME }}
           password: ${{ secrets.GITLAB_PASSWORD }}
 
