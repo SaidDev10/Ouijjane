@@ -26,7 +26,7 @@ jobs:
       - name: Docker login
         uses: docker/login-action@v3.0.0
         with:
-          registry: ${{ secrets.GITLAB_REGISTRY }}
+          registry: ${{ env.GITLAB_REGISTRY }}
           username: ${{ secrets.GITLAB_USERNAME }}
           password: ${{ secrets.GITLAB_PASSWORD }}
 

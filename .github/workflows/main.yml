@@ -35,7 +35,6 @@ jobs:
   #       run: dotnet test --no-build --verbosity normal
 
   docker:
-    # uses: SaidDev10/Ouijjane/.github/workflows/docker-workflow.yml@main
     uses: ./.github/workflows/docker-workflow.yml
     with:
           PROJECT_MODULE: "village"
