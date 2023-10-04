@@ -14,6 +14,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution items", "Solution items", "{66562722-5B96-4E3A-94A2-44D1808EF076}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
+		.github\workflows\docker-workflow.yml = .github\workflows\docker-workflow.yml
+		.github\workflows\main.yml = .github\workflows\main.yml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{99DA2408-096D-49F2-A378-39E1D0477821}"
@@ -49,13 +51,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{7B291255
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ouijjane.Village.Application.Tests", "tests\Ouijjane.Village.Application.Tests\Ouijjane.Village.Application.Tests.csproj", "{398890F2-129A-4A44-A1F0-B35DC5A984D7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ouijjane.Shared.Application.Tests", "tests\Ouijjane.Shared.Application.Tests\Ouijjane.Shared.Application.Tests.csproj", "{EE16285E-40A6-4D77-9F64-878A34E4813F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ouijjane.Shared.Application.Tests", "tests\Ouijjane.Shared.Application.Tests\Ouijjane.Shared.Application.Tests.csproj", "{EE16285E-40A6-4D77-9F64-878A34E4813F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{140B1BD0-3B36-4D49-ACDD-861014E2138C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Village", "Village", "{0021F50B-5AB5-4A27-845F-249A7443CBE4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ouijjane.Shared.Infrastructure.Tests", "tests\Ouijjane.Shared.Infrastructure.Tests\Ouijjane.Shared.Infrastructure.Tests.csproj", "{FBAD8702-5622-4A02-8F29-9ACBF2A50C42}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ouijjane.Shared.Infrastructure.Tests", "tests\Ouijjane.Shared.Infrastructure.Tests\Ouijjane.Shared.Infrastructure.Tests.csproj", "{FBAD8702-5622-4A02-8F29-9ACBF2A50C42}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

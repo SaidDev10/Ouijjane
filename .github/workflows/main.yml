@@ -40,6 +40,10 @@ jobs:
     needs: build
 
     steps:
+    
+      - name: Checkout
+        uses: actions/checkout@v4
+
       - name: Build Village image
         if: github.event.inputs.build_village_image == 'true' || github.ref == 'refs/heads/main'
         uses: ./.github/workflows/docker-workflow.yml
