@@ -93,5 +93,6 @@ jobs:
       
       - name: Push image to production
         run: |
-          docker tag "$IMAGE_NAME:${{ GITHUB.REF_NAME }}-$GITHUB_SHA_SHORT" "${{ vars.GITLAB_GROUP }}/$IMAGE_NAME:${{ GITHUB.REF_NAME }}"
-          docker push "${{ vars.GITLAB_GROUP }}/$IMAGE_NAME:${{ GITHUB.REF_NAME }}"
+          docker pull "${{ vars.GITLAB_GROUP }}-test/$IMAGE_NAME:${{ GITHUB.REF_NAME }}-$GITHUB_SHA_SHORT"
+          docker tag "${{ vars.GITLAB_GROUP }}-test/$IMAGE_NAME:${{ GITHUB.REF_NAME }}-$GITHUB_SHA_SHORT" "${{ vars.GITLAB_GROUP }}/$IMAGE_NAME:release-${{ GITHUB.REF_NAME }}}-$GITHUB_SHA_SHORT"
+          docker push "${{ vars.GITLAB_GROUP }}/$IMAGE_NAME:release-${{ GITHUB.REF_NAME }}}-$GITHUB_SHA_SHORT"
