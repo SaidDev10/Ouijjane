@@ -40,12 +40,12 @@ jobs:
 
       - name: Build image
         working-directory: ./src/
-        run: echo "IMAGE_ID=$(echo $(docker build -t $IMAGE_NAME:${{ GITHUB.REF_NAME }}-$GITHUB_SHA_SHORT --build-arg MICROSVC=${MICROSVC} --build-arg CSPROJ=${CSPROJ} --build-arg ASSEMBLY=${ASSEMBLY} . | awk '/Successfully built/{print $NF}'))"
+        run: docker build -t $IMAGE_NAME:${{ GITHUB.REF_NAME }}-$GITHUB_SHA_SHORT --build-arg MICROSVC=${MICROSVC} --build-arg CSPROJ=${CSPROJ} --build-arg ASSEMBLY=${ASSEMBLY} .
 
       - name: Push image
         run: |
           docker tag "$IMAGE_NAME:${{ GITHUB.REF_NAME }}-$GITHUB_SHA_SHORT" "${{ vars.GITLAB_GROUP }}-test/$IMAGE_NAME:${{ GITHUB.REF_NAME }}-$GITHUB_SHA_SHORT"
           docker push "${{ vars.GITLAB_GROUP }}-test/$IMAGE_NAME:${{ GITHUB.REF_NAME }}-$GITHUB_SHA_SHORT"
-          docker tag $IMAGE_ID "$IMAGE_NAME:${{ GITHUB.REF_NAME }}"
-          docker tag "$IMAGE_NAME:${{ GITHUB.REF_NAME }}" "${{ vars.GITLAB_GROUP }}/$IMAGE_NAME:${{ GITHUB.REF_NAME }}"
+          
+          docker tag "$IMAGE_NAME:${{ GITHUB.REF_NAME }}-$GITHUB_SHA_SHORT" "${{ vars.GITLAB_GROUP }}/$IMAGE_NAME:${{ GITHUB.REF_NAME }}"
           docker push "${{ vars.GITLAB_GROUP }}/$IMAGE_NAME:${{ GITHUB.REF_NAME }}"
