@@ -12,33 +12,33 @@ on:
         description: push village image
 
 jobs:
-  # build:
-  #   name: Build
-  #   runs-on: ubuntu-latest
+  build:
+    name: Build
+    runs-on: ubuntu-latest
 
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v4
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
 
-  #     - name: Setup .NET
-  #       uses: actions/setup-dotnet@v3
-  #       with:
-  #         dotnet-version: 8.0.x
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 8.0.x
 
-  #     - name: Restore
-  #       run: dotnet restore
+      - name: Restore
+        run: dotnet restore
 
-  #     - name: Build
-  #       run: dotnet build --no-restore
+      - name: Build
+        run: dotnet build --no-restore
         
-  #     - name: Test
-  #       run: dotnet test --no-build --verbosity normal
+      - name: Test
+        run: dotnet test --no-build --verbosity normal
 
-  docker:
+  build_village_api_image:
+    needs: build
     uses: ./.github/workflows/docker-workflow.yml
     with:
           PROJECT_MODULE: "Village"
           PROJECT_COMPONENT: "Api"
           PROJECT_SUBPATH: ""
     secrets: inherit
-          
