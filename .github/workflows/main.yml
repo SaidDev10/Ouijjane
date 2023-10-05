@@ -37,26 +37,8 @@ jobs:
   docker:
     uses: ./.github/workflows/docker-workflow.yml
     with:
-          PROJECT_MODULE: "village"
-          PROJECT_COMPONENT: "api"
+          PROJECT_MODULE: "Village"
+          PROJECT_COMPONENT: "Api"
           PROJECT_SUBPATH: ""
     secrets: inherit
-
-  # docker:
-  #   name: Docker
-  #   runs-on: ubuntu-latest
-  #   # needs: build
-
-  #   steps:
-    
-  #     - name: Checkout
-  #       uses: actions/checkout@v4
-
-  #     - name: Build Village image
-  #       if: github.event.inputs.build_village_image == 'true' || github.ref == 'refs/heads/main'
-  #       uses: ./.github/workflows/docker-workflow.yml
-  #       with:
-  #         PROJECT_MODULE: "village"
-  #         PROJECT_COMPONENT: "api"
-  #         PROJECT_SUBPATH: ""
           

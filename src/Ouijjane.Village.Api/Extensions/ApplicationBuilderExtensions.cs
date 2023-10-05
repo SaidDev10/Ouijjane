@@ -1,7 +1,7 @@
 ﻿using Carter;
 using Ouijjane.Village.Infrastructure.Extensions;
 
-namespace Ouijjane.Village.WebApi.Extensions;
+namespace Ouijjane.Village.Api.Extensions;
 public static class ApplicationBuilderExtensions
 {
     public static async Task UseWebMiddleware(this WebApplication app, IWebHostEnvironment environment)

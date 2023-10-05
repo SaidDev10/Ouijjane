@@ -1,6 +1,6 @@
 ﻿using Carter;
 
-namespace Ouijjane.Village.WebApi.Extensions;
+namespace Ouijjane.Village.Api.Extensions;
 
 public static class ServiceCollectionExtensions
 {

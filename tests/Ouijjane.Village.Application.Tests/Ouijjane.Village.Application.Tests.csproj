@@ -32,7 +32,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Ouijjane.Village.WebApi\Ouijjane.Village.WebApi.csproj" />
+    <ProjectReference Include="..\..\src\Ouijjane.Village.Api\Ouijjane.Village.Api.csproj" />
   </ItemGroup>
 
 </Project>

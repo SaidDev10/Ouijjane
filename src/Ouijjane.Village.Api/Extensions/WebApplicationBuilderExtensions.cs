@@ -1,4 +1,4 @@
-﻿namespace Ouijjane.Village.WebApi.Extensions;
+﻿namespace Ouijjane.Village.Api.Extensions;
 
 internal static class WebApplicationBuilderExtensions
 {

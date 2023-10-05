@@ -2,7 +2,7 @@
 using MediatR;
 using Ouijjane.Village.Application.Features.Inhabitants.Queries;
 
-namespace Ouijjane.Village.WebApi.Endpoints
+namespace Ouijjane.Village.Api.Endpoints
 {
     public class Inhabitants : ICarterModule
     {
