@@ -14,12 +14,40 @@ on:
         type: string
 
 jobs:
+  init:
+    name: initialisation
+    runs-on: ubuntu-latest
+    outputs:
+      IMAGE_NAME: ${{ steps.setParams.outputs.IMAGE_NAME }}
+      MICROSVC: ${{ steps.setParams.outputs.MICROSVC }}
+      CSPROJ: ${{ steps.setParams.outputs.CSPROJ }}
+      ASSEMBLY: ${{ steps.setParams.outputs.ASSEMBLY }}
+      GITHUB_SHA_SHORT: ${{ steps.setParams.outputs.GITHUB_SHA_SHORT }}
+
+    steps:
+      - name: Set parameters
+        id: setParams
+        run: |
+          echo "IMAGE_NAME=$(echo ${{ inputs.PROJECT_MODULE }}-${{ inputs.PROJECT_COMPONENT }} | tr A-Z a-z)" >> "$GITHUB_OUTPUT"
+          echo "MICROSVC=$(echo ${{ inputs.PROJECT_SUBPATH }}${{ vars.PRODUCT }}.${{ inputs.PROJECT_MODULE }}.${{ inputs.PROJECT_COMPONENT }})" >> "$GITHUB_OUTPUT"
+          echo "CSPROJ=$(echo ${{ vars.PRODUCT }}.${{ inputs.PROJECT_MODULE }}.${{ inputs.PROJECT_COMPONENT }}.csproj)" >> "$GITHUB_OUTPUT"
+          echo "ASSEMBLY=$(echo ${{ vars.PRODUCT }}.${{ inputs.PROJECT_MODULE }}.${{ inputs.PROJECT_COMPONENT }}.dll)" >> "$GITHUB_OUTPUT"
+          echo "GITHUB_SHA_SHORT=$(echo $GITHUB_SHA | cut -c 1-6)" >> $GITHUB_OUTPUT
+        
   docker:
     name: Docker
     runs-on: ubuntu-latest
-    
+    needs: init
+    if: github.event.inputs.build_images == 'true' || contains(fromJSON('["refs/heads/main", "refs/heads/staging", "refs/heads/production"]'), github.ref)
+    env:
+      IMAGE_NAME: ${{needs.init.outputs.IMAGE_NAME}}
+      MICROSVC: ${{needs.init.outputs.MICROSVC}}
+      CSPROJ: ${{needs.init.outputs.CSPROJ}}
+      ASSEMBLY: ${{needs.init.outputs.ASSEMBLY}}
+      GITHUB_SHA_SHORT: ${{needs.init.outputs.GITHUB_SHA_SHORT}}
+
     steps:
-    
+
       - name: Checkout
         uses: actions/checkout@v4
 
@@ -30,14 +58,6 @@ jobs:
           username: ${{ secrets.GITLAB_USERNAME }}
           password: ${{ secrets.GITLAB_PASSWORD }}
 
-      - name: Set parameters
-        run: |
-          echo "IMAGE_NAME=$(echo ${{ inputs.PROJECT_MODULE }}-${{ inputs.PROJECT_COMPONENT }} | tr A-Z a-z)" >> "$GITHUB_ENV"
-          echo "MICROSVC=$(echo ${{ inputs.PROJECT_SUBPATH }}${{ vars.PRODUCT }}.${{ inputs.PROJECT_MODULE }}.${{ inputs.PROJECT_COMPONENT }})" >> "$GITHUB_ENV"
-          echo "CSPROJ=$(echo ${{ vars.PRODUCT }}.${{ inputs.PROJECT_MODULE }}.${{ inputs.PROJECT_COMPONENT }}.csproj)" >> "$GITHUB_ENV"
-          echo "ASSEMBLY=$(echo ${{ vars.PRODUCT }}.${{ inputs.PROJECT_MODULE }}.${{ inputs.PROJECT_COMPONENT }}.dll)" >> "$GITHUB_ENV"
-          echo "GITHUB_SHA_SHORT=$(echo $GITHUB_SHA | cut -c 1-6)" >> $GITHUB_ENV
-
       - name: Build image
         working-directory: ./src/
         run: docker build -t $IMAGE_NAME:${{ GITHUB.REF_NAME }}-$GITHUB_SHA_SHORT --build-arg MICROSVC=${MICROSVC} --build-arg CSPROJ=${CSPROJ} --build-arg ASSEMBLY=${ASSEMBLY} .
@@ -46,6 +66,32 @@ jobs:
         run: |
           docker tag "$IMAGE_NAME:${{ GITHUB.REF_NAME }}-$GITHUB_SHA_SHORT" "${{ vars.GITLAB_GROUP }}-test/$IMAGE_NAME:${{ GITHUB.REF_NAME }}-$GITHUB_SHA_SHORT"
           docker push "${{ vars.GITLAB_GROUP }}-test/$IMAGE_NAME:${{ GITHUB.REF_NAME }}-$GITHUB_SHA_SHORT"
+    
+  production:
+    name: production
+    runs-on: ubuntu-latest
+    needs: [init, docker]
+    if: github.ref_type = 'tag' #should be run manually (normally)
+    env:
+      IMAGE_NAME: ${{needs.init.outputs.IMAGE_NAME}}
+      MICROSVC: ${{needs.init.outputs.MICROSVC}}
+      CSPROJ: ${{needs.init.outputs.CSPROJ}}
+      ASSEMBLY: ${{needs.init.outputs.ASSEMBLY}}
+      GITHUB_SHA_SHORT: ${{needs.init.outputs.GITHUB_SHA_SHORT}}
           
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Docker login
+        uses: docker/login-action@v3
+        with:
+          registry: registry.gitlab.com
+          username: ${{ secrets.GITLAB_USERNAME }}
+          password: ${{ secrets.GITLAB_PASSWORD }}
+      
+      - name: Push image to production
+        run: |
           docker tag "$IMAGE_NAME:${{ GITHUB.REF_NAME }}-$GITHUB_SHA_SHORT" "${{ vars.GITLAB_GROUP }}/$IMAGE_NAME:${{ GITHUB.REF_NAME }}"
           docker push "${{ vars.GITLAB_GROUP }}/$IMAGE_NAME:${{ GITHUB.REF_NAME }}"

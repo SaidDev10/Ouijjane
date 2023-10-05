@@ -2,14 +2,14 @@ name: dotnet ci-cd
 
 on:
   push:
-    branches: [main]
+    branches: [main, staging, integration]
   pull_request:
-    branches: [main]
+    branches: [main, staging, integration]
   workflow_dispatch:
     inputs:
-      build_village_image:
+      build_images:
         type: boolean
-        description: push village image
+        description: push microservices' images
 
 jobs:
   build:
