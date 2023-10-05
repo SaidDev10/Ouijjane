@@ -71,7 +71,7 @@ jobs:
     name: production
     runs-on: ubuntu-latest
     needs: [init, docker]
-    if: github.ref_type = 'tag' #should be run manually (normally)
+    if: github.ref_type == 'tag' #should be run manually (normally)
     env:
       IMAGE_NAME: ${{needs.init.outputs.IMAGE_NAME}}
       MICROSVC: ${{needs.init.outputs.MICROSVC}}
