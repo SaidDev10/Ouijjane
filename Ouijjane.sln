@@ -15,6 +15,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 		.github\workflows\docker-workflow.yml = .github\workflows\docker-workflow.yml
+		src\Dockerfile = src\Dockerfile
 		.github\workflows\main.yml = .github\workflows\main.yml
 	EndProjectSection
 EndProject
@@ -37,11 +38,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{DEFD549E-AC86-42D3-B43C-9421A5075325}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{33996D60-BFB0-4000-A4A2-A49241274F20}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{E5F792B1-1AE6-4617-87B3-7E95052F05F9}"
-	ProjectSection(SolutionItems) = preProject
-		src\Dockerfile = src\Dockerfile
-	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ouijjane.Village.Database", "src\Ouijjane.Village.Database\Ouijjane.Village.Database.csproj", "{6E81ABFB-98A9-49E9-899F-11416E3CDF7F}"
 EndProject
@@ -127,7 +123,6 @@ Global
 		{8A4A38C3-41B7-449C-B905-2791D692CB68} = {30E8E2D0-F444-4BE7-8A45-29D8F4C6445D}
 		{DEFD549E-AC86-42D3-B43C-9421A5075325} = {AAC691A1-67AA-4974-9CF6-B573E265F78B}
 		{33996D60-BFB0-4000-A4A2-A49241274F20} = {AAC691A1-67AA-4974-9CF6-B573E265F78B}
-		{E5F792B1-1AE6-4617-87B3-7E95052F05F9} = {66562722-5B96-4E3A-94A2-44D1808EF076}
 		{6E81ABFB-98A9-49E9-899F-11416E3CDF7F} = {30E8E2D0-F444-4BE7-8A45-29D8F4C6445D}
 		{398890F2-129A-4A44-A1F0-B35DC5A984D7} = {0021F50B-5AB5-4A27-845F-249A7443CBE4}
 		{EE16285E-40A6-4D77-9F64-878A34E4813F} = {140B1BD0-3B36-4D49-ACDD-861014E2138C}

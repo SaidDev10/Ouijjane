@@ -1,8 +1,8 @@
-﻿using Ouijjane.Shared.Infrastructure.Settings;
+﻿using Ouijjane.Shared.Infrastructure.Options;
 using System.ComponentModel.DataAnnotations;
 
-namespace Ouijjane.Shared.Infrastructure.Tests.Settings.Validation;
-public class MicroserviceSettingsValidationTests
+namespace Ouijjane.Shared.Infrastructure.Tests.Options.Validation;
+public class MicroserviceOptionsValidationTests
 {    
     [Theory]
     [InlineData(null)]
@@ -10,7 +10,7 @@ public class MicroserviceSettingsValidationTests
     public void WhenProductIsInvalid_ShouldReturnResult(string product)
     {
         // Arrange
-        var settings = new MicroserviceSettings
+        var settings = new MicroserviceOptions
         {
             Product = product,
             Module = "village",
@@ -27,7 +27,7 @@ public class MicroserviceSettingsValidationTests
         // Assert
         Assert.NotEmpty(validationResults);
         Assert.Equal(1, validationResults.Count);
-        Assert.Contains(nameof(MicroserviceSettings.Product), validationResults.SelectMany(r => r.MemberNames));
+        Assert.Contains(nameof(MicroserviceOptions.Product), validationResults.SelectMany(r => r.MemberNames));
     }
     
     [Theory]
@@ -36,7 +36,7 @@ public class MicroserviceSettingsValidationTests
     public void WhenModuleIsInvalid_ShouldReturnResult(string module)
     {
         // Arrange
-        var settings = new MicroserviceSettings
+        var settings = new MicroserviceOptions
         {
             Product = "ouijjane",
             Module = module,
@@ -53,7 +53,7 @@ public class MicroserviceSettingsValidationTests
         // Assert
         Assert.NotEmpty(validationResults);
         Assert.Equal(1, validationResults.Count);
-        Assert.Contains(nameof(MicroserviceSettings.Module), validationResults.SelectMany(r => r.MemberNames));
+        Assert.Contains(nameof(MicroserviceOptions.Module), validationResults.SelectMany(r => r.MemberNames));
     }
     
     [Theory]
@@ -62,7 +62,7 @@ public class MicroserviceSettingsValidationTests
     public void WhenComponentIsInvalid_ShouldReturnResult(string component)
     {
         // Arrange
-        var settings = new MicroserviceSettings
+        var settings = new MicroserviceOptions
         {
             Product = "ouijjane",
             Module = "village",
@@ -79,7 +79,7 @@ public class MicroserviceSettingsValidationTests
         // Assert
         Assert.NotEmpty(validationResults);
         Assert.Equal(1, validationResults.Count);
-        Assert.Contains(nameof(MicroserviceSettings.Component), validationResults.SelectMany(r => r.MemberNames));
+        Assert.Contains(nameof(MicroserviceOptions.Component), validationResults.SelectMany(r => r.MemberNames));
     }
     [Theory]
     [InlineData(null)]
@@ -87,7 +87,7 @@ public class MicroserviceSettingsValidationTests
     public void WhenNamespaceIsInvalid_ShouldReturnResult(string @namespace)
     {
         // Arrange
-        var settings = new MicroserviceSettings
+        var settings = new MicroserviceOptions
         {
             Product = "ouijjane",
             Module = "village",
@@ -104,7 +104,7 @@ public class MicroserviceSettingsValidationTests
         // Assert
         Assert.NotEmpty(validationResults);
         Assert.Equal(1, validationResults.Count);
-        Assert.Contains(nameof(MicroserviceSettings.Namespace), validationResults.SelectMany(r => r.MemberNames));
+        Assert.Contains(nameof(MicroserviceOptions.Namespace), validationResults.SelectMany(r => r.MemberNames));
     }
 
     [Theory]
@@ -113,7 +113,7 @@ public class MicroserviceSettingsValidationTests
     public void WhenVersionIsInvalid_ShouldReturnResult(string version)
     {
         // Arrange
-        var settings = new MicroserviceSettings
+        var settings = new MicroserviceOptions
         {
             Product = "ouijjane",
             Module = "village",
@@ -130,7 +130,7 @@ public class MicroserviceSettingsValidationTests
         // Assert
         Assert.NotEmpty(validationResults);
         Assert.Equal(1, validationResults.Count);
-        Assert.Contains(nameof(MicroserviceSettings.Version), validationResults.SelectMany(r => r.MemberNames));
+        Assert.Contains(nameof(MicroserviceOptions.Version), validationResults.SelectMany(r => r.MemberNames));
     }
 
     [Theory]
@@ -139,7 +139,7 @@ public class MicroserviceSettingsValidationTests
     public void WhenAllIsInvalid_ShouldReturnResult(string invalidValue)
     {
         // Arrange
-        var settings = new MicroserviceSettings
+        var settings = new MicroserviceOptions
         {
             Product = invalidValue,
             Module = invalidValue,
@@ -159,11 +159,11 @@ public class MicroserviceSettingsValidationTests
         Assert.Equal(5, validationResults.Count);
 
         var invalidMembers = validationResults.SelectMany(r => r.MemberNames).ToList();
-        Assert.Contains(nameof(MicroserviceSettings.Product), validationResults.SelectMany(r => r.MemberNames));
-        Assert.Contains(nameof(MicroserviceSettings.Module), validationResults.SelectMany(r => r.MemberNames));
-        Assert.Contains(nameof(MicroserviceSettings.Component), validationResults.SelectMany(r => r.MemberNames));
-        Assert.Contains(nameof(MicroserviceSettings.Namespace), validationResults.SelectMany(r => r.MemberNames));
-        Assert.Contains(nameof(MicroserviceSettings.Version), validationResults.SelectMany(r => r.MemberNames));
+        Assert.Contains(nameof(MicroserviceOptions.Product), validationResults.SelectMany(r => r.MemberNames));
+        Assert.Contains(nameof(MicroserviceOptions.Module), validationResults.SelectMany(r => r.MemberNames));
+        Assert.Contains(nameof(MicroserviceOptions.Component), validationResults.SelectMany(r => r.MemberNames));
+        Assert.Contains(nameof(MicroserviceOptions.Namespace), validationResults.SelectMany(r => r.MemberNames));
+        Assert.Contains(nameof(MicroserviceOptions.Version), validationResults.SelectMany(r => r.MemberNames));
     }
 
 }

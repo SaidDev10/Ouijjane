@@ -6,7 +6,7 @@ using Ouijjane.Shared.Application.Behaviours;
 namespace Ouijjane.Shared.Application.Extenstions;
 public static class ServiceCollectionExtensions
 {
-    public static void AddSharedApplicationServices(this IServiceCollection services, Type type)
+    public static void AddApplicationServices(this IServiceCollection services, Type type)
     {
         services.AddMediator(type);
     }

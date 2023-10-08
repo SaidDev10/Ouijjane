@@ -2,19 +2,17 @@ using Ouijjane.Village.Infrastructure.Extensions;
 using Ouijjane.Village.Application.Extensions;
 using Ouijjane.Village.Api.Extensions;
 
-var builder = WebApplication.CreateBuilder(args);
+var builder = WebApplication.CreateBuilder(args)
+                            .AddConfigurations();
 
-builder.AddConfigurations();//TODO: .RegisterSerilog();
-
-builder.Services.AddApplicationServices();
-builder.Services.AddInfrastructureServices(builder.Configuration);
-builder.Services.AddWebApiServices(builder.Environment);
-
+builder.Services
+       .AddVillageApplicationServices()
+       .AddVillageInfrastructureServices(builder.Configuration)
+       .AddVillageWebServices(builder.Configuration);
 
 var app = builder.Build();
 
-//TODO: redo it in a clean way
-await app.UseWebMiddleware(app.Environment);
+await app.UseVillageWebServices();
 
 app.Run();
 

@@ -1,0 +1,8 @@
+{
+  "SwaggerOptions": {
+    "Enabled": true,
+    "Title": "Village Service",
+    "includeXmlComments": true,
+    "xmlFile": "Ouijjane.Village.Api.xml"
+  }
+}

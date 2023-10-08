@@ -1,5 +1,5 @@
 {
-  "DatabaseSettings": {
+  "DatabaseOptions": {
     "DBProvider": "postgresql",
     "ConnectionString": "Host=127.0.0.1;Username=postgres;Password=postgres;Database=ouijjane-local-village;Port=5432;Include Error Detail=true"
   }

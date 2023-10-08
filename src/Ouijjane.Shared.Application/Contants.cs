@@ -1,5 +1,5 @@
-﻿namespace Ouijjane.Shared.Application.Constants;
-public class Order
+﻿namespace Ouijjane.Shared.Application;
+public class OrderContants
 {
     public const string ASCENDING = "asc";
     public const string DESCENDING = "desc";

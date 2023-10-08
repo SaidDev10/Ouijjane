@@ -1,5 +1,4 @@
-﻿using Ouijjane.Shared.Application.Constants;
-using Ouijjane.Shared.Application.Models.Result.Pagination;
+﻿using Ouijjane.Shared.Application.Models.Result.Pagination;
 using Ouijjane.Shared.Domain.Entities;
 using System.Linq.Expressions;
 
@@ -27,9 +26,9 @@ public abstract class PaginationFilterSpec<T> : BaseSpecification<T> where T : E
 
     private PaginationFilterSpec<T> ApplyOrder(PaginationFilter filter)
     {
-        var sortOrder = string.IsNullOrEmpty(filter.SortOrder) ? Order.ASCENDING : filter.SortOrder;
+        var sortOrder = string.IsNullOrEmpty(filter.SortOrder) ? OrderContants.ASCENDING : filter.SortOrder;
 
-        if (sortOrder == Order.DESCENDING)
+        if (sortOrder == OrderContants.DESCENDING)
         {
             ApplyOrderByDescending(GetSortProperty(filter.SortColumn));
         }

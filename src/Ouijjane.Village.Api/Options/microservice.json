@@ -1,5 +1,5 @@
 {
-  "MicroserviceSettings": {
+  "MicroserviceOptions": {
     "Product": "ouijjane",
     "Module": "village",
     "Component": "api",

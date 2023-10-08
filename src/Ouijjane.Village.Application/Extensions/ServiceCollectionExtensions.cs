@@ -5,8 +5,10 @@ using Ouijjane.Village.Application.Features.Inhabitants.Queries;
 namespace Ouijjane.Village.Application.Extensions;
 public static class ServiceCollectionExtensions
 {
-    public static void AddApplicationServices(this IServiceCollection services)
+    public static IServiceCollection AddVillageApplicationServices(this IServiceCollection services)
     {
-        services.AddSharedApplicationServices(typeof(GetAllPagedInhabitantsQueryValidator));
+        services.AddApplicationServices(typeof(GetAllPagedInhabitantsQueryValidator));
+        
+        return services;
     }
 }

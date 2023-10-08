@@ -9,13 +9,14 @@ namespace Ouijjane.Village.Infrastructure.Extensions;
 
 public static class ServiceCollectionExtensions
 {
-    public static void AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddVillageInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddSharedInfrastructureServices<VillageContext>(configuration);
-        services.AddDatabaseServices(null);
-        services.AddDatabaseSeeder();
+        services.AddVillageOptions();
+
+        services.AddInfrastructureServices<VillageContext>(configuration);
+
+        services.AddScoped<IDatabaseSeeder, DatabaseSeeder>();
+
+        return services;
     }
-
-    private static void AddDatabaseSeeder(this IServiceCollection services) => services.AddScoped<IDatabaseSeeder, DatabaseSeeder>();
-
 }

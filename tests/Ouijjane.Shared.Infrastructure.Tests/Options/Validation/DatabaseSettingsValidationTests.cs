@@ -1,8 +1,8 @@
-﻿using Ouijjane.Shared.Infrastructure.Settings;
+﻿using Ouijjane.Shared.Infrastructure.Options;
 using System.ComponentModel.DataAnnotations;
 
-namespace Ouijjane.Shared.Infrastructure.Tests.Settings.Validation;
-public class DatabaseSettingsValidationTests
+namespace Ouijjane.Shared.Infrastructure.Tests.Options.Validation;
+public class DatabaseOptionsValidationTests
 {
     [Theory]
     [InlineData(null)]
@@ -10,7 +10,7 @@ public class DatabaseSettingsValidationTests
     public void WhenConnectionStringIsInvalid_ShouldReturnResult(string connectionString)
     {
         // Arrange
-        var settings = new DatabaseSettings
+        var settings = new DatabaseOptions
         {
             DBProvider = "dbProvider",
             ConnectionString = connectionString
@@ -24,7 +24,7 @@ public class DatabaseSettingsValidationTests
         // Assert
         Assert.NotEmpty(validationResults);
         Assert.Equal(1, validationResults.Count);
-        Assert.Contains(nameof(DatabaseSettings.ConnectionString), validationResults.SelectMany(r => r.MemberNames));
+        Assert.Contains(nameof(DatabaseOptions.ConnectionString), validationResults.SelectMany(r => r.MemberNames));
     }
 
     [Theory]
@@ -33,7 +33,7 @@ public class DatabaseSettingsValidationTests
     public void WhenDBProviderIsInvalid_ShouldReturnResult(string dbProvider)
     {
         // Arrange
-        var settings = new DatabaseSettings
+        var settings = new DatabaseOptions
         {
             DBProvider = dbProvider,
             ConnectionString = "connectionString"
@@ -47,7 +47,7 @@ public class DatabaseSettingsValidationTests
         // Assert
         Assert.NotEmpty(validationResults);
         Assert.Equal(1, validationResults.Count);
-        Assert.Contains(nameof(DatabaseSettings.DBProvider), validationResults.SelectMany(r => r.MemberNames));
+        Assert.Contains(nameof(DatabaseOptions.DBProvider), validationResults.SelectMany(r => r.MemberNames));
     }
 
     [Theory]
@@ -56,7 +56,7 @@ public class DatabaseSettingsValidationTests
     public void WhenAllAreInvalid_ShouldReturnAllResults(string invalidValue)
     {
         // Arrange
-        var settings = new DatabaseSettings
+        var settings = new DatabaseOptions
         {
             DBProvider = invalidValue,
             ConnectionString = invalidValue
@@ -72,7 +72,7 @@ public class DatabaseSettingsValidationTests
         Assert.Equal(2, validationResults.Count);
 
         var invalidMembers = validationResults.SelectMany(r => r.MemberNames).ToList();
-        Assert.Contains(nameof(DatabaseSettings.ConnectionString), invalidMembers);
-        Assert.Contains(nameof(DatabaseSettings.DBProvider), invalidMembers);
+        Assert.Contains(nameof(DatabaseOptions.ConnectionString), invalidMembers);
+        Assert.Contains(nameof(DatabaseOptions.DBProvider), invalidMembers);
     }
 }
