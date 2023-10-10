@@ -1,7 +1,10 @@
 {
   "ElasticOptions": {
-    "EnableElasticSearch": false,
-    "ElasticSearchUrl": "",
-    "EnableApm": false
+    "EnableElasticSearch": true,
+    "ElasticSearchUrl": "http://localhost:9200",
+    "EnableApm": true
+    //"EnableElasticSearch": false,
+    //"ElasticSearchUrl": "",
+    //"EnableApm": false
   }
 }

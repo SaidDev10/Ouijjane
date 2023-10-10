@@ -1,8 +1,2 @@
 {
-  "SerilogOptions": {
-    "EnableErichers": true,
-    "StructuredConsoleLogging": false,
-    "MinimumLogLevel": "Information",
-    "OverrideMinimumLogLevel": true
-  }
 }

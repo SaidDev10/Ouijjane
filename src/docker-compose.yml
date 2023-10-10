@@ -1,8 +1,9 @@
 version: '3.8'
+name: ouijjane
 
 services:
   village:
-    image: registry.gitlab.com/docker7834340/ouijjane/village-api:latest
+    image: registry.gitlab.com/docker7834340/ouijjane/village-api:release-0.0.2-109c88
     container_name: village-api
     ports:
       - 1001:1001
@@ -46,15 +47,10 @@ services:
     ports:
       - 9200:9200
     environment:
-      - node.name=es01
-      - cluster.name=es-docker-cluster
-      - cluster.intial_master_nodes=es01
       - bootstrap.memory_lock=true
-      - "ES_JAVA_OPTS=-Xms512m -Xms515m"
-    ulimits:
-      memlock:
-        soft: -1
-        hard: -1
+      - xpack.security.enabled=false
+      - discovery.type=single-node
+    mem_limit: 512m
     volumes:
       - es01-data:/usr/share/elasticsearch/data
     networks:
@@ -70,6 +66,8 @@ services:
       ELASTICSEARCH_HOSTS: http://es01:9200
     networks:
       - ouijjane
+    depends_on:
+      - es01
 
 volumes:
   postgres-data:

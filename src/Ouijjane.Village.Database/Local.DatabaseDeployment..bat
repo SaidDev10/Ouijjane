@@ -2,7 +2,7 @@
 
 echo *** Setting grate params ***
 SET environment=Local
-SET connectionString="Server=localhost;Port=5432;Username=postgres;Password=postgres;Database=ouijjane-local-village;"
+SET connectionString="Server=localhost;Port=5433;Username=postgres;Password=postgres;Database=ouijjane-local-village;"
 SET sql.files.directory=.\db\
 
 echo *** Running grate ***

@@ -7,6 +7,7 @@ using Ouijjane.Village.Domain.Entities;
 using Ouijjane.Shared.Application.Extenstions;
 using System.Linq.Expressions;
 using Ouijjane.Shared.Application.Models.Result.Pagination;
+using Microsoft.Extensions.Logging;
 
 namespace Ouijjane.Village.Application.Features.Inhabitants.Queries;
 
@@ -25,19 +26,28 @@ public class GetAllPagedInhabitantsQueryValidator : AbstractValidator<GetAllPage
 internal class GetAllPagedInhabitantsQueryHandler : IRequestHandler<GetAllPagedInhabitantsQuery, PaginatedResult<GetAllPagedInhabitantsResponse>>
 {
     private readonly IUnitOfWork _unitOfWork;
-    public GetAllPagedInhabitantsQueryHandler(IUnitOfWork unitOfWork)
+    private readonly ILogger<GetAllPagedInhabitantsQueryHandler> _logger;
+    public GetAllPagedInhabitantsQueryHandler(IUnitOfWork unitOfWork, ILogger<GetAllPagedInhabitantsQueryHandler> logger)
     {
         _unitOfWork = unitOfWork;
+        _logger = logger;
     }
 
     public async Task<PaginatedResult<GetAllPagedInhabitantsResponse>> Handle(GetAllPagedInhabitantsQuery request, CancellationToken cancellationToken)
     {
+        _logger.LogInformation("[Start] Get all paged inhabitants ");
+
         Expression<Func<Inhabitant, GetAllPagedInhabitantsResponse>> expression = e => e.Adapt<GetAllPagedInhabitantsResponse>();
 
-        return await _unitOfWork.Repository<Inhabitant>()
-                   .FindQueryable(new FindAllInhabitantsWithPaginationFilterSpec(request))
-                   .Select(expression)
-                   .ToPaginatedListAsync(request);
+        var result = await _unitOfWork
+                                    .Repository<Inhabitant>()
+                                    .FindQueryable(new FindAllInhabitantsWithPaginationFilterSpec(request))
+                                    .Select(expression)
+                                    .ToPaginatedListAsync(request);
+        
+        _logger.LogInformation("[End] Get all paged inhabitants ");
+        
+        return result;
     }
 }
 

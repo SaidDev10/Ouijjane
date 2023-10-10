@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Ouijjane.Shared.Application.Interfaces.Persistence.Repositories;
+using Ouijjane.Shared.Infrastructure.Diagnostics.Logging;
 using System.Collections;
 
 namespace Ouijjane.Shared.Infrastructure.Persistence.Repositories;
@@ -8,18 +9,24 @@ public class UnitOfWork<TContext> : IUnitOfWork where TContext : DbContext
 {
     private bool _disposed;
     private Hashtable? _repositories;
+    private readonly ILogger<UnitOfWork<TContext>> _logger;
     //private readonly REDIS _cache;
+
+    public TContext Context { get; }
 
     public UnitOfWork(TContext context, ILogger<UnitOfWork<TContext>> logger)
     {
         Context = context;
+        _logger = logger;
     }
 
-    public TContext Context { get; }
 
     public async Task<int> Commit(CancellationToken cancellationToken = default)
     {
-        return await Context.SaveChangesAsync(cancellationToken);
+        using (PerformanceTimer.Log(_logger, "saving changes made in current unit of work"))//TODO: localisation
+        {
+            return await Context.SaveChangesAsync(cancellationToken);
+        }
     }
 
     public async Task<int> CommitAndRemoveCache(CancellationToken cancellationToken, params string[] cacheKeys)
