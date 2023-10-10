@@ -3,6 +3,7 @@ using Ouijjane.Village.Infrastructure.Extensions;
 using Ouijjane.Shared.Infrastructure.Extensions.Api;
 using Ouijjane.Shared.Infrastructure.Extensions.Exceptions;
 using Ouijjane.Shared.Infrastructure.Extensions.Swagger;
+using Serilog;
 
 namespace Ouijjane.Village.Api.Extensions;
 
@@ -16,9 +17,10 @@ public static class ServiceCollectionExtensions
         services.AddSwagger(configuration);
     }
 
-    public static async Task UseVillageWebServices(this WebApplication app)
+
+    public static async Task UseVillageMiddlewares(this WebApplication app)
     {
-        if(app.Environment.IsDevelopment())
+        if(!app.Environment.IsProduction())
         {
             app.UseMigrationsEndPoint();
             await app.SeedAsync();
@@ -29,10 +31,14 @@ public static class ServiceCollectionExtensions
 
         app.UseHsts();
         app.UseHttpsRedirection();
-        
+
+        app.UseSerilogRequestLogging();
+
+
         app.MapCarter();
         app.UseSwagger();
     }
+}
 
 
 //The proper order should be: ↓
@@ -47,5 +53,3 @@ public static class ServiceCollectionExtensions
 //• Authorization
 //• Custom Middlewares
 //• Endpoints
-
-}

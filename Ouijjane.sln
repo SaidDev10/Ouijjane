@@ -14,9 +14,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution items", "Solution items", "{66562722-5B96-4E3A-94A2-44D1808EF076}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
-		.github\workflows\docker-workflow.yml = .github\workflows\docker-workflow.yml
-		src\Dockerfile = src\Dockerfile
-		.github\workflows\main.yml = .github\workflows\main.yml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{99DA2408-096D-49F2-A378-39E1D0477821}"
@@ -54,6 +51,18 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ouijjane.Shared.Infrastructure.Tests", "tests\Ouijjane.Shared.Infrastructure.Tests\Ouijjane.Shared.Infrastructure.Tests.csproj", "{FBAD8702-5622-4A02-8F29-9ACBF2A50C42}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ouijjane.Village.Api", "src\Ouijjane.Village.Api\Ouijjane.Village.Api.csproj", "{9A22D7CA-FEF2-4AC5-8BC7-4740DB79945C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Github", "Github", "{4D9CD141-3212-4F87-AC3B-C923121F674D}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\docker-workflow.yml = .github\workflows\docker-workflow.yml
+		.github\workflows\main.yml = .github\workflows\main.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docker", "Docker", "{E7CC8FC8-0744-426B-8E81-4FA809B99E4E}"
+	ProjectSection(SolutionItems) = preProject
+		src\docker-compose.yml = src\docker-compose.yml
+		src\Dockerfile = src\Dockerfile
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -130,6 +139,8 @@ Global
 		{0021F50B-5AB5-4A27-845F-249A7443CBE4} = {7B291255-6086-4A83-9E62-82E8170762E6}
 		{FBAD8702-5622-4A02-8F29-9ACBF2A50C42} = {140B1BD0-3B36-4D49-ACDD-861014E2138C}
 		{9A22D7CA-FEF2-4AC5-8BC7-4740DB79945C} = {22A8E5D9-22F3-4C6C-A0E5-7634DAA3B5C3}
+		{4D9CD141-3212-4F87-AC3B-C923121F674D} = {66562722-5B96-4E3A-94A2-44D1808EF076}
+		{E7CC8FC8-0744-426B-8E81-4FA809B99E4E} = {66562722-5B96-4E3A-94A2-44D1808EF076}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8EE9DA79-94FF-4ABD-B8CB-8B6394632956}

@@ -1,0 +1,7 @@
+{
+  "ElasticOptions": {
+    "EnableElasticSearch": false,
+    "ElasticSearchUrl": "",
+    "EnableApm": false
+  }
+}

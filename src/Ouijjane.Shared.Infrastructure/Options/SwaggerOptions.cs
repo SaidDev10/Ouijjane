@@ -4,7 +4,7 @@ namespace Ouijjane.Shared.Infrastructure.Options
 {
     public class SwaggerOptions : IOptionsRoot, IValidatableObject
     {
-        public bool Enabled { get; set; }
+        public bool Enabled { get; set; } = false;
         public string Title { get; set; } = string.Empty;
         public bool IncludeXmlComments { get; set; } = false;
         public string XmlFile { get; set; } = string.Empty;

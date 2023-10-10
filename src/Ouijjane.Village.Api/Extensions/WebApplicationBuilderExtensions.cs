@@ -8,10 +8,14 @@ internal static class WebApplicationBuilderExtensions
         var env = builder.Environment;
         builder.Configuration.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true)
+                .AddJsonFile($"{optionsDirectory}/app.json", optional: false, reloadOnChange: true)
+                .AddJsonFile($"{optionsDirectory}/app.{env.EnvironmentName}.json", optional: true, reloadOnChange: true)
                 //.AddJsonFile($"{optionsDirectory}/cache.json", optional: false, reloadOnChange: true)
                 //.AddJsonFile($"{optionsDirectory}/cache.{env.EnvironmentName}.json", optional: true, reloadOnChange: true)
                 //.AddJsonFile($"{optionsDirectory}/cors.json", optional: false, reloadOnChange: true)
                 //.AddJsonFile($"{optionsDirectory}/cors.{env.EnvironmentName}.json", optional: true, reloadOnChange: true)
+                .AddJsonFile($"{optionsDirectory}/elastic.json", optional: false, reloadOnChange: true)
+                .AddJsonFile($"{optionsDirectory}/elastic.{env.EnvironmentName}.json", optional: true, reloadOnChange: true)
                 .AddJsonFile($"{optionsDirectory}/database.json", optional: false, reloadOnChange: true)
                 .AddJsonFile($"{optionsDirectory}/database.{env.EnvironmentName}.json", optional: true, reloadOnChange: true)
                 //.AddJsonFile($"{optionsDirectory}/hangfire.json", optional: false, reloadOnChange: true)
@@ -34,6 +38,8 @@ internal static class WebApplicationBuilderExtensions
                 //.AddJsonFile($"{optionsDirectory}/securityheaders.{env.EnvironmentName}.json", optional: true, reloadOnChange: true)
                 //.AddJsonFile($"{optionsDirectory}/signalr.json", optional: false, reloadOnChange: true)
                 //.AddJsonFile($"{optionsDirectory}/signalr.{env.EnvironmentName}.json", optional: true, reloadOnChange: true)
+                .AddJsonFile($"{optionsDirectory}/serilog.json", optional: false, reloadOnChange: true)
+                .AddJsonFile($"{optionsDirectory}/serilog.{env.EnvironmentName}.json", optional: true, reloadOnChange: true)
                 .AddJsonFile($"{optionsDirectory}/swagger.json", optional: false, reloadOnChange: true)
                 .AddJsonFile($"{optionsDirectory}/swagger.{env.EnvironmentName}.json", optional: true, reloadOnChange: true)
                 .AddEnvironmentVariables();

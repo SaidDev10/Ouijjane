@@ -1,43 +1,20 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
 namespace Ouijjane.Shared.Infrastructure.Options;
-public class MicroserviceOptions : IOptionsRoot, IValidatableObject
+public class MicroserviceOptions : IOptionsRoot
 {
-    public string? Product { get; set; }
+    [Required(ErrorMessage = $"{nameof(MicroserviceOptions)}.{nameof(Product)} is not configured")]//TODO: localisation
+    public string Product { get; set; } = string.Empty;
 
-    public string? Module { get; set; }
+    [Required(ErrorMessage = $"{nameof(MicroserviceOptions)}.{nameof(Module)} is not configured")]
+    public string Module { get; set; } = string.Empty;
 
-    public string? Component { get; set; }
+    [Required(ErrorMessage = $"{nameof(MicroserviceOptions)}.{nameof(Component)} is not configured")]
+    public string Component { get; set; } = string.Empty;
 
-    public string? Version { get; set; }
+    [Required(ErrorMessage = $"{nameof(MicroserviceOptions)}.{nameof(Version)} is not configured")]
+    public string Version { get; set; } = string.Empty;
 
-    public string? Namespace { get; set; }
-
-    public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
-    {
-        if (string.IsNullOrEmpty(Product))
-        {
-            yield return new ValidationResult($"{nameof(MicroserviceOptions)}.{nameof(Product)} is not configured", new[] { nameof(Product) }); //TODO: localisation
-        }
-
-        if (string.IsNullOrEmpty(Module))
-        {
-            yield return new ValidationResult($"{nameof(MicroserviceOptions)}.{nameof(Module)} is not configured", new[] { nameof(Module) }); //TODO: localisation
-        }
-
-        if (string.IsNullOrEmpty(Component))
-        {
-            yield return new ValidationResult($"{nameof(MicroserviceOptions)}.{nameof(Component)} is not configured", new[] { nameof(Component) }); //TODO: localisation
-        }
-
-        if (string.IsNullOrEmpty(Version))
-        {
-            yield return new ValidationResult($"{nameof(MicroserviceOptions)}.{nameof(Version)} is not configured", new[] { nameof(Version) }); //TODO: localisation
-        }
-
-        if (string.IsNullOrEmpty(Namespace))
-        {
-            yield return new ValidationResult($"{nameof(MicroserviceOptions)}.{nameof(Namespace)} is not configured", new[] { nameof(Namespace) }); //TODO: localisation
-        }
-    }
+    [Required(ErrorMessage = $"{nameof(MicroserviceOptions)}.{nameof(Namespace)} is not configured")]
+    public string Namespace { get; set; } = string.Empty;
 }

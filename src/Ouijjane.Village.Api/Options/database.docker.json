@@ -1,0 +1,6 @@
+{
+  "DatabaseOptions": {
+    "DBProvider": "postgresql",
+    "ConnectionString": "Host=postgres;Username=postgres;Password=postgres;Database=ouijjane-docker-village;Port=5433"
+  }
+}

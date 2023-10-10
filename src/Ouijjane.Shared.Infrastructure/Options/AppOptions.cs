@@ -4,6 +4,6 @@ namespace Ouijjane.Shared.Infrastructure.Options;
 
 public class AppOptions : IOptionsRoot
 {
-    [Required(AllowEmptyStrings = false)]
+    [Required(ErrorMessage = $"{nameof(MicroserviceOptions)}.{nameof(Name)} is not configured")] //TODO: localisation
     public string Name { get; set; } = "Ouijjane";
 }
