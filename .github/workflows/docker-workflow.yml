@@ -71,7 +71,7 @@ jobs:
     name: Push image to staging
     runs-on: ubuntu-latest
     needs: [init, docker]
-    if: github.event.inputs.build_images == 'true' && (contains(fromJSON('["refs/heads/staging"]'), github.ref)
+    if: github.event.inputs.build_images == 'true' && contains(fromJSON('["refs/heads/staging"]'), github.ref)
     env:
       IMAGE_NAME: ${{needs.init.outputs.IMAGE_NAME}}
       MICROSVC: ${{needs.init.outputs.MICROSVC}}
