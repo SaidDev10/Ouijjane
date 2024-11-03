@@ -2,10 +2,10 @@ name: dotnet ci-cd
 
 on:
   push:
-    branches: [main, staging, integration]
+    branches: [main, staging, development]
     tags: ['*']
   pull_request:
-    branches: [main, staging, integration]
+    branches: [main, staging, development]
   workflow_dispatch:
     inputs:
       build_images:
