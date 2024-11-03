@@ -14,7 +14,7 @@ on:
 
 jobs:
   build:
-    name: Build
+    name: Build & test
     runs-on: ubuntu-latest
 
     steps:
@@ -35,7 +35,8 @@ jobs:
       - name: Test
         run: dotnet test --no-build --verbosity normal
 
-  build_village_api_image:
+  village_api:
+    name: build village api image
     needs: build
     uses: ./.github/workflows/docker-workflow.yml
     with:

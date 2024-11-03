@@ -40,10 +40,10 @@ internal class GetAllPagedInhabitantsQueryHandler : IRequestHandler<GetAllPagedI
         Expression<Func<Inhabitant, GetAllPagedInhabitantsResponse>> expression = e => e.Adapt<GetAllPagedInhabitantsResponse>();
 
         var result = await _unitOfWork
-                                    .Repository<Inhabitant>()
-                                    .FindQueryable(new FindAllInhabitantsWithPaginationFilterSpec(request))
-                                    .Select(expression)
-                                    .ToPaginatedListAsync(request);
+            .Repository<Inhabitant>()
+            .FindQueryable(new FindAllInhabitantsWithPaginationFilterSpec(request))
+            .Select(expression)
+            .ToPaginatedListAsync(request);
         
         _logger.LogInformation("[End] Get all paged inhabitants ");
         
