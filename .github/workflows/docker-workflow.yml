@@ -60,12 +60,12 @@ jobs:
 
       - name: Build image
         working-directory: ./src/
-        run: docker build -t $IMAGE_NAME:${{ GITHUB.REF_NAME }}-$GITHUB_SHA_SHORT --build-arg MICROSVC=${MICROSVC} --build-arg CSPROJ=${CSPROJ} --build-arg ASSEMBLY=${ASSEMBLY} .
+        run: docker build -t $IMAGE_NAME:$GITHUB_SHA_SHORT --build-arg MICROSVC=${MICROSVC} --build-arg CSPROJ=${CSPROJ} --build-arg ASSEMBLY=${ASSEMBLY} .
 
       - name: Push image
         run: |
-          docker tag "$IMAGE_NAME:${{ GITHUB.REF_NAME }}-$GITHUB_SHA_SHORT" "${{ vars.GITLAB_GROUP }}-test/$IMAGE_NAME:${{ GITHUB.REF_NAME }}-$GITHUB_SHA_SHORT"
-          docker push "${{ vars.GITLAB_GROUP }}-test/$IMAGE_NAME:${{ GITHUB.REF_NAME }}-$GITHUB_SHA_SHORT"
+          docker tag "$IMAGE_NAME:$GITHUB_SHA_SHORT" "${{ vars.GITLAB_GROUP }}-test/$IMAGE_NAME:$GITHUB_SHA_SHORT"
+          docker push "${{ vars.GITLAB_GROUP }}-test/$IMAGE_NAME:$GITHUB_SHA_SHORT"
     
   staging:
     name: Push image to staging
@@ -91,8 +91,8 @@ jobs:
       
       - name: Push image
         run: |
-          docker pull "${{ vars.GITLAB_GROUP }}-test/$IMAGE_NAME:${{ GITHUB.REF_NAME }}-$GITHUB_SHA_SHORT"
-          docker tag "${{ vars.GITLAB_GROUP }}-test/$IMAGE_NAME:${{ GITHUB.REF_NAME }}-$GITHUB_SHA_SHORT" "${{ vars.GITLAB_GROUP }}-staging/$IMAGE_NAME:${{ GITHUB.REF_NAME }}-$GITHUB_SHA_SHORT"
+          docker pull "${{ vars.GITLAB_GROUP }}-test/$IMAGE_NAME:$GITHUB_SHA_SHORT"
+          docker tag "${{ vars.GITLAB_GROUP }}-test/$IMAGE_NAME:$GITHUB_SHA_SHORT" "${{ vars.GITLAB_GROUP }}-staging/$IMAGE_NAME:${{ GITHUB.REF_NAME }}-$GITHUB_SHA_SHORT"
           docker push "${{ vars.GITLAB_GROUP }}-staging/$IMAGE_NAME:${{ GITHUB.REF_NAME }}-$GITHUB_SHA_SHORT"
     
   production:
