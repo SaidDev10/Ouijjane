@@ -10,5 +10,5 @@ grate --files %sql.files.directory% --connectionstring %connectionString% --envi
 
 Pause
 
-Rem database name will be replaced with ouijjane-local-village-local when implementing multi-tenancy
+Rem database name will be replaced with ouijjane-local-village-local when implementing multi-tenancy (=> ex: ouijjane-local-village-mighermane, ouijjane-local-village-izbaha, ...)
 Rem –databasetype : mariadb | oracle | postgresql | sqlite | sqlserver

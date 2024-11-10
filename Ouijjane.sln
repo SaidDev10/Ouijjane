@@ -64,6 +64,30 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docker", "Docker", "{E7CC8F
 		src\Dockerfile = src\Dockerfile
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "grafana", "grafana", "{2CAA2056-9E27-45F4-AC22-1721B19C318C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "provisioning", "provisioning", "{D727BD0B-4EFE-45F1-8D1F-3496DA8966BD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "prometheus", "prometheus", "{4B96419A-39C5-4DBF-98D3-CB2255AF9CD7}"
+	ProjectSection(SolutionItems) = preProject
+		src\docker-apm\prometheus\alertmanager.yml = src\docker-apm\prometheus\alertmanager.yml
+		src\docker-apm\prometheus\alert_rules.yml = src\docker-apm\prometheus\alert_rules.yml
+		src\docker-apm\prometheus\prometheus.yml = src\docker-apm\prometheus\prometheus.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "dashboards", "dashboards", "{82AFB7AF-2BD8-4D55-8AC0-0E212B2EA039}"
+	ProjectSection(SolutionItems) = preProject
+		src\docker-apm\grafana\provisioning\dashboards\custom-dashboard.json = src\docker-apm\grafana\provisioning\dashboards\custom-dashboard.json
+		src\docker-apm\grafana\provisioning\dashboards\dashboard.yaml = src\docker-apm\grafana\provisioning\dashboards\dashboard.yaml
+		src\docker-apm\grafana\provisioning\dashboards\device-dashboard.json = src\docker-apm\grafana\provisioning\dashboards\device-dashboard.json
+		src\docker-apm\grafana\provisioning\dashboards\my-first-dashboard.json = src\docker-apm\grafana\provisioning\dashboards\my-first-dashboard.json
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "datasources", "datasources", "{7237272A-656C-403F-BCB6-8D557C082F52}"
+	ProjectSection(SolutionItems) = preProject
+		src\docker-apm\grafana\provisioning\datasources\datasources.yaml = src\docker-apm\grafana\provisioning\datasources\datasources.yaml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -141,6 +165,11 @@ Global
 		{9A22D7CA-FEF2-4AC5-8BC7-4740DB79945C} = {22A8E5D9-22F3-4C6C-A0E5-7634DAA3B5C3}
 		{4D9CD141-3212-4F87-AC3B-C923121F674D} = {66562722-5B96-4E3A-94A2-44D1808EF076}
 		{E7CC8FC8-0744-426B-8E81-4FA809B99E4E} = {66562722-5B96-4E3A-94A2-44D1808EF076}
+		{2CAA2056-9E27-45F4-AC22-1721B19C318C} = {E7CC8FC8-0744-426B-8E81-4FA809B99E4E}
+		{D727BD0B-4EFE-45F1-8D1F-3496DA8966BD} = {2CAA2056-9E27-45F4-AC22-1721B19C318C}
+		{4B96419A-39C5-4DBF-98D3-CB2255AF9CD7} = {E7CC8FC8-0744-426B-8E81-4FA809B99E4E}
+		{82AFB7AF-2BD8-4D55-8AC0-0E212B2EA039} = {D727BD0B-4EFE-45F1-8D1F-3496DA8966BD}
+		{7237272A-656C-403F-BCB6-8D557C082F52} = {D727BD0B-4EFE-45F1-8D1F-3496DA8966BD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8EE9DA79-94FF-4ABD-B8CB-8B6394632956}

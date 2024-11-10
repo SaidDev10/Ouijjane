@@ -6,7 +6,13 @@ using Serilog.Core;
 using Serilog.Events;
 using Serilog.Exceptions;
 using Serilog.Formatting.Compact;
-using Serilog.Sinks.Elasticsearch;
+using Elastic.CommonSchema.Serilog;
+using Elastic.Serilog.Sinks;
+using Elastic.Channels;
+using Elastic.Clients.Elasticsearch;
+using Elastic.Transport;
+using Microsoft.Extensions.Options;
+using Elastic.Clients.Elasticsearch.Nodes;
 
 namespace Ouijjane.Shared.Infrastructure.Extensions.Logging;
 
@@ -42,14 +48,20 @@ public static class SerilogExtensions
         {
             envName = envName.Replace(".", "-");
 
-            serilogConfig.WriteTo.Async(wt => wt.Elasticsearch(
-                new ElasticsearchSinkOptions(new Uri(elasticOptions.ElasticSearchUrl))
+            serilogConfig
+                .WriteTo.Elasticsearch([new Uri(elasticOptions.ElasticSearchUrl)], opts =>
                 {
-                    IndexFormat = $"{appName}-logs-{envName}-{DateTime.UtcNow:yyyy-MM}",
-                    AutoRegisterTemplate = true,
-                    NumberOfShards = 2,
-                    NumberOfReplicas = 1
-                }));
+                    opts.BootstrapMethod = Elastic.Ingest.Elasticsearch.BootstrapMethod.Failure;
+                    opts.DataStream = new Elastic.Ingest.Elasticsearch.DataStreams.DataStreamName($"logs-{DateTime.UtcNow:yyyy-MM}", $"{appName}", $"{envName}");
+                    opts.ConfigureChannel = channelOpts => {
+                        channelOpts.BufferOptions = new BufferOptions { ExportMaxConcurrency = 10 };
+                    };
+                }
+                //, transport =>
+                //{
+                //    transport.Authentication(new BasicAuthentication(username, password)); / transport.Authentication(new ApiKey(base64EncodedApiKey)); 
+                //}
+                );
         }
     }
 

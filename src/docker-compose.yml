@@ -3,15 +3,15 @@ name: ouijjane
 
 services:
   village:
-    image: registry.gitlab.com/docker7834340/ouijjane/village-api:release-0.0.2-109c88
     container_name: village-api
+    image: registry.gitlab.com/docker7834340/ouijjane/village-api:release-v0.0.3-151821
     ports:
-      - 1001:1001
-      - 2001:2001
+      - 5001:5001
+      - 6001:6001
     environment:
       - ASPNETCORE_ENVIRONMENT=docker
-      - ASPNETCORE_URLS=https://+:2001;http://+:1001
-      - ASPNETCORE_HTTPS_PORT=2001
+      - ASPNETCORE_URLS=https://+:6001;http://+:5001
+      - ASPNETCORE_HTTPS_PORT=6001
       - ASPNETCORE_Kestrel__Certificates__Default__Password=password!
       - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/cert.pfx
     volumes:
@@ -20,7 +20,6 @@ services:
       - ouijjane
     depends_on:
       - postgres
-    restart: on-failure
 
   postgres:
     container_name: postgres
@@ -42,10 +41,11 @@ services:
       retries: 5
 
   es01:
-    container_name: es01
+    container_name: elastic-search
     image: docker.elastic.co/elasticsearch/elasticsearch:8.10.2
     ports:
       - 9200:9200
+      - 9300:9300
     environment:
       - bootstrap.memory_lock=true
       - xpack.security.enabled=false
@@ -57,7 +57,7 @@ services:
       - ouijjane
 
   kb01:
-    container_name: kb01
+    container_name: kibana
     image: docker.elastic.co/kibana/kibana:8.10.2
     ports:
       - 5601:5601
@@ -69,9 +69,92 @@ services:
     depends_on:
       - es01
 
+  ########################################## APM ########################################## 
+  
+  cadvisor: #cAdvisor (Container Advisor) collects containers metrics
+    container_name: cadvisor
+    image: gcr.io/cadvisor/cadvisor
+    ports:
+      - 8080:8080
+    volumes: 
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker
+    networks: 
+      - ouijjane
+    
+  prometheus: #prometheus collects important data about applications and services
+    container_name: prometheus
+    image: prom/prometheus
+    ports:
+      - 9090:9090 
+    volumes:
+      - ./docker-apm/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      # - "./docker-apm/prometheus/alert_rules.yml:/etc/prometheus/rules.yml"
+      - prometheus-data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+      - '--web.enable-lifecycle'
+    networks: 
+      - ouijjane
+    depends_on:
+      - cadvisor
+      
+  node-exporter: #Node Exporter: configures prometheus to scrape metrics using the pull model and stores them as time-series data
+    container_name: prometheus-node-exporter
+    image: prom/node-exporter
+    ports:
+      - 9100:9100
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.rootfs=/rootfs'
+      - '--path.sysfs=/host/sys'
+      - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
+    networks: 
+      - ouijjane
+    
+  # alert-manager: #alertmanager: manages alerts generted by Prometheus and ensures to send them to the right receivers 
+  #   container_name: prometheus-alert-manager
+  #   image: prom/alertmanager
+  #   ports:
+  #     - 9093:9093
+  #   command:
+  #     - '--config.file=/etc/alertmanager/config.yml'
+  #     - '--storage.path=/alertmanager'
+  #   volumes:
+  #     - "./docker-apm/prometheus/alertmanager.yml:/alertmanager/alertmanager.yml"
+  #   networks:
+  #     - ouijjane
+
+  grafana: #grafana: displays interactive dashboards for analyzing and tracking various metrics and data sources in real-time
+    container_name: grafana
+    image: grafana/grafana
+    ports:
+      - "3000:3000"
+    environment:
+      GF_INSTALL_PLUGINS: 'grafana-clock-panel,grafana-simple-json-datasource'
+    volumes: 
+      - grafana-data:/var/lib/grafana
+      - ./docker-apm/grafana/provisioning/:/etc/grafana/provisioning/
+    networks: 
+      - ouijjane
+    depends_on:
+      - prometheus
+
+
 volumes:
   postgres-data:
   es01-data:
+  prometheus-data:
+  grafana-data:
 
 networks:
   ouijjane:    
