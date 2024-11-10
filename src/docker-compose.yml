@@ -4,7 +4,7 @@ name: ouijjane
 services:
   village:
     container_name: village-api
-    image: registry.gitlab.com/docker7834340/ouijjane/village-api:release-v0.0.3-151821
+    image: registry.gitlab.com/docker7834340/ouijjane/village-api:latest
     ports:
       - 5001:5001
     environment:
