@@ -39,7 +39,7 @@ public static class SerilogExtensions
 
     private static void ConfigureElastic(LoggerConfiguration serilogConfig, ElasticOptions elasticOptions, string appName, string envName)
     {
-        if (elasticOptions.EnableElasticSearch)
+        if (elasticOptions.EnableElasticSearch && envName != "Development")
         {
             envName = envName.Replace(".", "-");
 
