@@ -35,8 +35,8 @@ RUN chmod +x ./entrypoint.sh
 #ENV MicroService__Component=api
 #ENV MicroService__Version=1.0.0
 #ENV MicroService__Namespace=local
-##docker build . -t xxx-my_tag-xxx --build-arg MICROSVC=Ouijjane.Village.WebApi --build-arg CSPROJ=Ouijjane.Village.WebApi.csproj --build-arg ASSEMBLY=Ouijjane.Village.WebApi.dll
-##docker run --name webapi -p 5000:80 -d xxx-my_tag-xxx    (http://localhost:5000/api/inhabitants)
+##docker build . -t xxx-my_tag-xxx --build-arg MICROSVC=Ouijjane.Village.Api --build-arg CSPROJ=Ouijjane.Village.Api.csproj --build-arg ASSEMBLY=Ouijjane.Village.Api.dll
+##docker run --name village-api-local -p 5001:80 -d xxx-my_tag-xxx    (http://localhost:5001/api/inhabitants)
 
 ENTRYPOINT ["./entrypoint.sh"]
 
