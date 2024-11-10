@@ -1,6 +1,6 @@
 {
   "DatabaseOptions": {
     "DBProvider": "postgresql",
-    "ConnectionString": "Host=localhost;Username=postgres;Password=postgres;Database=ouijjane-local-village;Port=5433"
+    "ConnectionString": "Host=localhost;Username=postgres;Password=postgres;Database=ouijjane-local-village;Port=5432"
   }
 }

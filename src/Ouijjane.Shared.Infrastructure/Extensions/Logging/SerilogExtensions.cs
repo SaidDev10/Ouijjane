@@ -6,13 +6,8 @@ using Serilog.Core;
 using Serilog.Events;
 using Serilog.Exceptions;
 using Serilog.Formatting.Compact;
-using Elastic.CommonSchema.Serilog;
 using Elastic.Serilog.Sinks;
 using Elastic.Channels;
-using Elastic.Clients.Elasticsearch;
-using Elastic.Transport;
-using Microsoft.Extensions.Options;
-using Elastic.Clients.Elasticsearch.Nodes;
 
 namespace Ouijjane.Shared.Infrastructure.Extensions.Logging;
 

@@ -7,33 +7,54 @@ services:
     image: registry.gitlab.com/docker7834340/ouijjane/village-api:release-v0.0.3-151821
     ports:
       - 5001:5001
-      - 6001:6001
     environment:
       - ASPNETCORE_ENVIRONMENT=docker
-      - ASPNETCORE_URLS=https://+:6001;http://+:5001
-      - ASPNETCORE_HTTPS_PORT=6001
-      - ASPNETCORE_Kestrel__Certificates__Default__Password=password!
-      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/cert.pfx
+      - ASPNETCORE_URLS=http://+:5001
     volumes:
       - ~/.aspnet/https:/https:ro
     networks: 
-      - ouijjane
+      - frontend
+      - backend
     depends_on:
       - postgres
+      - es01
+
+  # #build image for local test
+  # village:
+  #   container_name: village-api
+  #   build: 
+  #     args:
+  #       MICROSVC: Ouijjane.Village.Api
+  #       CSPROJ: Ouijjane.Village.Api.csproj
+  #       ASSEMBLY: Ouijjane.Village.Api.dll
+  #   ports:
+  #     - 5001:5001
+  #   environment:
+  #     - ASPNETCORE_ENVIRONMENT=docker
+  #     - ASPNETCORE_URLS=http://+:5001
+  #   volumes:
+  #     - ~/.aspnet/https:/https:ro
+  #   restart: always
+  #   networks: 
+  #     - frontend
+  #     - backend
+  #   depends_on:
+  #     - postgres
+  #     - es01
 
   postgres:
     container_name: postgres
     image: postgres:latest
     ports:
-      - 5433:5433
+      - 5432:5432
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-      - PGPORT=5433
+      - PGPORT=5432
     volumes:
       - postgres-data:/data/db
     networks:
-      - ouijjane
+      - backend
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U admin"]
       interval: 10s
@@ -45,7 +66,6 @@ services:
     image: docker.elastic.co/elasticsearch/elasticsearch:8.10.2
     ports:
       - 9200:9200
-      - 9300:9300
     environment:
       - bootstrap.memory_lock=true
       - xpack.security.enabled=false
@@ -54,7 +74,7 @@ services:
     volumes:
       - es01-data:/usr/share/elasticsearch/data
     networks:
-      - ouijjane
+      - backend
 
   kb01:
     container_name: kibana
@@ -65,7 +85,7 @@ services:
       ELASTICSEARCH_URL: http://es01:9200
       ELASTICSEARCH_HOSTS: http://es01:9200
     networks:
-      - ouijjane
+      - backend
     depends_on:
       - es01
 
@@ -82,7 +102,7 @@ services:
       - /sys:/sys:ro
       - /var/lib/docker/:/var/lib/docker
     networks: 
-      - ouijjane
+      - backend
     
   prometheus: #prometheus collects important data about applications and services
     container_name: prometheus
@@ -100,7 +120,7 @@ services:
       - '--web.console.templates=/etc/prometheus/consoles'
       - '--web.enable-lifecycle'
     networks: 
-      - ouijjane
+      - backend
     depends_on:
       - cadvisor
       
@@ -119,7 +139,7 @@ services:
       - '--path.sysfs=/host/sys'
       - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
     networks: 
-      - ouijjane
+      - backend
     
   # alert-manager: #alertmanager: manages alerts generted by Prometheus and ensures to send them to the right receivers 
   #   container_name: prometheus-alert-manager
@@ -132,7 +152,7 @@ services:
   #   volumes:
   #     - "./docker-apm/prometheus/alertmanager.yml:/alertmanager/alertmanager.yml"
   #   networks:
-  #     - ouijjane
+  #     - backend
 
   grafana: #grafana: displays interactive dashboards for analyzing and tracking various metrics and data sources in real-time
     container_name: grafana
@@ -145,7 +165,7 @@ services:
       - grafana-data:/var/lib/grafana
       - ./docker-apm/grafana/provisioning/:/etc/grafana/provisioning/
     networks: 
-      - ouijjane
+      - backend
     depends_on:
       - prometheus
 
@@ -157,7 +177,8 @@ volumes:
   grafana-data:
 
 networks:
-  ouijjane:    
+  frontend:    
+  backend:    
 
 
 # eshop-mq:
