@@ -40,7 +40,7 @@ services:
   #     - backend
   #   depends_on:
   #     - postgres
-  #     - es01 
+  #     - es01
 
   postgres:
     container_name: postgres
