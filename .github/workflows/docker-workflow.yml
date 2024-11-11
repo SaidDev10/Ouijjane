@@ -15,8 +15,9 @@ on:
 
 jobs:
   init:
-    name: initialisation
+    name: Initialization
     runs-on: ubuntu-latest
+    if: contains(fromJSON('["refs/heads/main", "refs/heads/staging"]'), github.ref)
     outputs:
       IMAGE_NAME: ${{ steps.setParams.outputs.IMAGE_NAME }}
       MICROSVC: ${{ steps.setParams.outputs.MICROSVC }}
@@ -35,10 +36,9 @@ jobs:
           echo "GITHUB_SHA_SHORT=$(echo $GITHUB_SHA | cut -c 1-6)" >> $GITHUB_OUTPUT
         
   docker:
-    name: Docker
+    name: Build image
     runs-on: ubuntu-latest
     needs: init
-    if: github.event.inputs.build_images == 'true' || github.ref_type == 'tag' || contains(fromJSON('["refs/heads/main", "refs/heads/staging", "refs/heads/production"]'), github.ref)
     env:
       IMAGE_NAME: ${{needs.init.outputs.IMAGE_NAME}}
       MICROSVC: ${{needs.init.outputs.MICROSVC}}
@@ -60,18 +60,19 @@ jobs:
 
       - name: Build image
         working-directory: ./src/
-        run: docker build -t $IMAGE_NAME:${{ GITHUB.REF_NAME }}-$GITHUB_SHA_SHORT --build-arg MICROSVC=${MICROSVC} --build-arg CSPROJ=${CSPROJ} --build-arg ASSEMBLY=${ASSEMBLY} .
+        run: docker build -t $IMAGE_NAME:$GITHUB_SHA_SHORT --build-arg MICROSVC=${MICROSVC} --build-arg CSPROJ=${CSPROJ} --build-arg ASSEMBLY=${ASSEMBLY} .
 
       - name: Push image
         run: |
-          docker tag "$IMAGE_NAME:${{ GITHUB.REF_NAME }}-$GITHUB_SHA_SHORT" "${{ vars.GITLAB_GROUP }}-test/$IMAGE_NAME:${{ GITHUB.REF_NAME }}-$GITHUB_SHA_SHORT"
-          docker push "${{ vars.GITLAB_GROUP }}-test/$IMAGE_NAME:${{ GITHUB.REF_NAME }}-$GITHUB_SHA_SHORT"
+          docker tag "$IMAGE_NAME:$GITHUB_SHA_SHORT" "${{ vars.GITLAB_GROUP }}-test/$IMAGE_NAME:$GITHUB_SHA_SHORT"
+          docker push "${{ vars.GITLAB_GROUP }}-test/$IMAGE_NAME:$GITHUB_SHA_SHORT"
     
-  production:
-    name: production
+  staging:
+    name: Push image to staging
     runs-on: ubuntu-latest
     needs: [init, docker]
-    if: github.ref_type == 'tag' #should be run manually (normally)
+    environment: staging
+    if: contains(fromJSON('["refs/heads/staging"]'), github.ref)
     env:
       IMAGE_NAME: ${{needs.init.outputs.IMAGE_NAME}}
       MICROSVC: ${{needs.init.outputs.MICROSVC}}
@@ -81,8 +82,33 @@ jobs:
           
     steps:
 
-      - name: Checkout
-        uses: actions/checkout@v4
+      - name: Docker login
+        uses: docker/login-action@v3
+        with:
+          registry: registry.gitlab.com
+          username: ${{ secrets.GITLAB_USERNAME }}
+          password: ${{ secrets.GITLAB_PASSWORD }}
+      
+      - name: Push image
+        run: |
+          docker pull "${{ vars.GITLAB_GROUP }}-test/$IMAGE_NAME:$GITHUB_SHA_SHORT"
+          docker tag "${{ vars.GITLAB_GROUP }}-test/$IMAGE_NAME:$GITHUB_SHA_SHORT" "${{ vars.GITLAB_GROUP }}-staging/$IMAGE_NAME:${{ GITHUB.REF_NAME }}-$GITHUB_SHA_SHORT"
+          docker push "${{ vars.GITLAB_GROUP }}-staging/$IMAGE_NAME:${{ GITHUB.REF_NAME }}-$GITHUB_SHA_SHORT"
+    
+  production:
+    name: Push image to production
+    runs-on: ubuntu-latest
+    needs: [init, docker, staging]
+    environment: production
+    if: github.ref_type == 'tag' && contains(fromJSON('["refs/heads/main"]'), github.ref)
+    env:
+      IMAGE_NAME: ${{needs.init.outputs.IMAGE_NAME}}
+      MICROSVC: ${{needs.init.outputs.MICROSVC}}
+      CSPROJ: ${{needs.init.outputs.CSPROJ}}
+      ASSEMBLY: ${{needs.init.outputs.ASSEMBLY}}
+      GITHUB_SHA_SHORT: ${{needs.init.outputs.GITHUB_SHA_SHORT}}
+          
+    steps:
 
       - name: Docker login
         uses: docker/login-action@v3
@@ -91,8 +117,8 @@ jobs:
           username: ${{ secrets.GITLAB_USERNAME }}
           password: ${{ secrets.GITLAB_PASSWORD }}
       
-      - name: Push image to production
+      - name: Push image
         run: |
-          docker pull "${{ vars.GITLAB_GROUP }}-test/$IMAGE_NAME:${{ GITHUB.REF_NAME }}-$GITHUB_SHA_SHORT"
-          docker tag "${{ vars.GITLAB_GROUP }}-test/$IMAGE_NAME:${{ GITHUB.REF_NAME }}-$GITHUB_SHA_SHORT" "${{ vars.GITLAB_GROUP }}/$IMAGE_NAME:release-${{ GITHUB.REF_NAME }}-$GITHUB_SHA_SHORT"
+          docker pull "${{ vars.GITLAB_GROUP }}-staging/$IMAGE_NAME:${{ GITHUB.REF_NAME }}-$GITHUB_SHA_SHORT"
+          docker tag "${{ vars.GITLAB_GROUP }}-staging/$IMAGE_NAME:${{ GITHUB.REF_NAME }}-$GITHUB_SHA_SHORT" "${{ vars.GITLAB_GROUP }}/$IMAGE_NAME:release-${{ GITHUB.REF_NAME }}-$GITHUB_SHA_SHORT"
           docker push "${{ vars.GITLAB_GROUP }}/$IMAGE_NAME:release-${{ GITHUB.REF_NAME }}-$GITHUB_SHA_SHORT"

@@ -37,6 +37,7 @@ public static class ServiceCollectionExtensions
 
         app.MapCarter();
         app.UseSwagger();
+        app.MapPrometheusScrapingEndpoint();
     }
 }
 
