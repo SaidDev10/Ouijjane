@@ -11,9 +11,16 @@ jobs:
   build:
     name: Build & test
     runs-on: ubuntu-latest
-    if: startsWith(github.ref, 'refs/tags/')
 
     steps:
+      - name: TEST check vars
+        run: |
+          echo "Repository: ${{ github.repository }}"
+          echo "Branch name: ${{ github.ref_name }}"
+          echo "Event name: ${{ github.event_name }}"
+          echo "Full ref: ${{ github.ref }}"
+          echo "Full ref: ${{ github.base_ref }}"
+      
       - name: Checkout
         uses: actions/checkout@v4
 
