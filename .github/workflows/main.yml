@@ -2,10 +2,10 @@ name: dotnet ci-cd
 
 on:
   push:
-    branches: [main, staging]
+    branches: [main]
     tags: ['*']
   pull_request:
-    branches: [main, staging]
+    branches: [main]
 
 jobs:
   build:
