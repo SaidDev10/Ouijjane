@@ -122,3 +122,6 @@ jobs:
           docker pull "${{ vars.GITLAB_GROUP }}-staging/$IMAGE_NAME:${{ GITHUB.REF_NAME }}-$GITHUB_SHA_SHORT"
           docker tag "${{ vars.GITLAB_GROUP }}-staging/$IMAGE_NAME:${{ GITHUB.REF_NAME }}-$GITHUB_SHA_SHORT" "${{ vars.GITLAB_GROUP }}/$IMAGE_NAME:release-${{ GITHUB.REF_NAME }}-$GITHUB_SHA_SHORT"
           docker push "${{ vars.GITLAB_GROUP }}/$IMAGE_NAME:release-${{ GITHUB.REF_NAME }}-$GITHUB_SHA_SHORT"
+
+          docker tag "${{ vars.GITLAB_GROUP }}/$IMAGE_NAME:release-${{ GITHUB.REF_NAME }}-$GITHUB_SHA_SHORT" "${{ vars.GITLAB_GROUP }}/$IMAGE_NAME:latest
+          docker push "${{ vars.GITLAB_GROUP }}/$IMAGE_NAME:latest

@@ -35,7 +35,7 @@ jobs:
     needs: build
     uses: ./.github/workflows/docker-workflow.yml
     with:
-          PROJECT_MODULE: "Village"
-          PROJECT_COMPONENT: "Api"
-          PROJECT_SUBPATH: ""
+      PROJECT_MODULE: "Village"
+      PROJECT_COMPONENT: "Api"
+      PROJECT_SUBPATH: ""
     secrets: inherit
