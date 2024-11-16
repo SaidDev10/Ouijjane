@@ -1,11 +1,4 @@
-﻿using Carter;
-using Ouijjane.Village.Infrastructure.Extensions;
-using Ouijjane.Shared.Infrastructure.Extensions.Api;
-using Ouijjane.Shared.Infrastructure.Extensions.Exceptions;
-using Ouijjane.Shared.Infrastructure.Extensions.Swagger;
-using Serilog;
-
-namespace Ouijjane.Village.Api.Extensions;
+﻿namespace Ouijjane.Village.Api.Extensions;
 
 public static class ServiceCollectionExtensions
 {
@@ -13,7 +6,7 @@ public static class ServiceCollectionExtensions
     {
         services.AddExceptionMiddleware();
         services.AddApi();
-        services.AddCarter();
+        services.AddFastEndpoints();
         services.AddSwagger(configuration);
     }
 
@@ -34,8 +27,7 @@ public static class ServiceCollectionExtensions
 
         app.UseSerilogRequestLogging();
 
-
-        app.MapCarter();
+        app.UseFastEndpoints(c => c.Versioning.Prefix = "v");
         app.UseSwagger();
         app.MapPrometheusScrapingEndpoint();
     }
