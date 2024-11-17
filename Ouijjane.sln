@@ -14,6 +14,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution items", "Solution items", "{66562722-5B96-4E3A-94A2-44D1808EF076}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
+		Directory.Packages.props = Directory.Packages.props
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{99DA2408-096D-49F2-A378-39E1D0477821}"
@@ -60,35 +61,44 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Github", "Github", "{4D9CD1
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docker", "Docker", "{E7CC8FC8-0744-426B-8E81-4FA809B99E4E}"
 	ProjectSection(SolutionItems) = preProject
-		src\docker-compose.yml = src\docker-compose.yml
-		src\Dockerfile = src\Dockerfile
+		docker-compose.yml = docker-compose.yml
+		Dockerfile = Dockerfile
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "grafana", "grafana", "{2CAA2056-9E27-45F4-AC22-1721B19C318C}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docker-apm", "docker-apm", "{56C81DD3-815F-491E-BF83-003B98F93076}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "provisioning", "provisioning", "{D727BD0B-4EFE-45F1-8D1F-3496DA8966BD}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "grafana", "grafana", "{C22D1B4A-31D3-49E0-B7C3-AA78E3EEC3E3}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "prometheus", "prometheus", "{4B96419A-39C5-4DBF-98D3-CB2255AF9CD7}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "prometheus", "prometheus", "{40C952E7-C505-49D9-BC8D-260997EF87EF}"
 	ProjectSection(SolutionItems) = preProject
-		src\docker-apm\prometheus\alertmanager.yml = src\docker-apm\prometheus\alertmanager.yml
-		src\docker-apm\prometheus\alert_rules.yml = src\docker-apm\prometheus\alert_rules.yml
-		src\docker-apm\prometheus\prometheus.yml = src\docker-apm\prometheus\prometheus.yml
+		docker-apm\prometheus\alertmanager.yml = docker-apm\prometheus\alertmanager.yml
+		docker-apm\prometheus\alert_rules.yml = docker-apm\prometheus\alert_rules.yml
+		docker-apm\prometheus\prometheus.yml = docker-apm\prometheus\prometheus.yml
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "dashboards", "dashboards", "{82AFB7AF-2BD8-4D55-8AC0-0E212B2EA039}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "provisioning", "provisioning", "{5FC9CEF5-AE14-4F16-94A2-3A486889C77F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "dashboards", "dashboards", "{39C1F8DC-73A7-4A1B-8333-AB53BD3B3C77}"
 	ProjectSection(SolutionItems) = preProject
-		src\docker-apm\grafana\provisioning\dashboards\custom-dashboard.json = src\docker-apm\grafana\provisioning\dashboards\custom-dashboard.json
-		src\docker-apm\grafana\provisioning\dashboards\dashboard.yaml = src\docker-apm\grafana\provisioning\dashboards\dashboard.yaml
-		src\docker-apm\grafana\provisioning\dashboards\device-dashboard.json = src\docker-apm\grafana\provisioning\dashboards\device-dashboard.json
-		src\docker-apm\grafana\provisioning\dashboards\my-first-dashboard.json = src\docker-apm\grafana\provisioning\dashboards\my-first-dashboard.json
+		docker-apm\grafana\provisioning\dashboards\custom-dashboard.json = docker-apm\grafana\provisioning\dashboards\custom-dashboard.json
+		docker-apm\grafana\provisioning\dashboards\dashboard.yaml = docker-apm\grafana\provisioning\dashboards\dashboard.yaml
+		docker-apm\grafana\provisioning\dashboards\device-dashboard.json = docker-apm\grafana\provisioning\dashboards\device-dashboard.json
+		docker-apm\grafana\provisioning\dashboards\grafana-alertmanager-dashboard.json = docker-apm\grafana\provisioning\dashboards\grafana-alertmanager-dashboard.json
+		docker-apm\grafana\provisioning\dashboards\grafana-appmetrics-dashboard.json = docker-apm\grafana\provisioning\dashboards\grafana-appmetrics-dashboard.json
+		docker-apm\grafana\provisioning\dashboards\grafana-argocd-dashboard.json = docker-apm\grafana\provisioning\dashboards\grafana-argocd-dashboard.json
+		docker-apm\grafana\provisioning\dashboards\grafana-aspnet_controllers-dashboard.json = docker-apm\grafana\provisioning\dashboards\grafana-aspnet_controllers-dashboard.json
+		docker-apm\grafana\provisioning\dashboards\grafana-aspnet_otel-dashboard.json = docker-apm\grafana\provisioning\dashboards\grafana-aspnet_otel-dashboard.json
+		docker-apm\grafana\provisioning\dashboards\grafana-awslambda-dashboard.json = docker-apm\grafana\provisioning\dashboards\grafana-awslambda-dashboard.json
+		docker-apm\grafana\provisioning\dashboards\grafana-nginx-dashboard.json = docker-apm\grafana\provisioning\dashboards\grafana-nginx-dashboard.json
+		docker-apm\grafana\provisioning\dashboards\grafana-postgresql-dashboard.json = docker-apm\grafana\provisioning\dashboards\grafana-postgresql-dashboard.json
+		docker-apm\grafana\provisioning\dashboards\grafana-rabbitmq-dashboard.json = docker-apm\grafana\provisioning\dashboards\grafana-rabbitmq-dashboard.json
+		docker-apm\grafana\provisioning\dashboards\my-first-dashboard.json = docker-apm\grafana\provisioning\dashboards\my-first-dashboard.json
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "datasources", "datasources", "{7237272A-656C-403F-BCB6-8D557C082F52}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "datasources", "datasources", "{C8D01010-7D36-4C89-9356-AA38CC6C21A6}"
 	ProjectSection(SolutionItems) = preProject
-		src\docker-apm\grafana\provisioning\datasources\datasources.yaml = src\docker-apm\grafana\provisioning\datasources\datasources.yaml
+		docker-apm\grafana\provisioning\datasources\datasources.yaml = docker-apm\grafana\provisioning\datasources\datasources.yaml
 	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docker-apm", "docker-apm", "{FD77E793-CB99-4197-8F31-8ABA073761BE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -167,12 +177,12 @@ Global
 		{9A22D7CA-FEF2-4AC5-8BC7-4740DB79945C} = {22A8E5D9-22F3-4C6C-A0E5-7634DAA3B5C3}
 		{4D9CD141-3212-4F87-AC3B-C923121F674D} = {66562722-5B96-4E3A-94A2-44D1808EF076}
 		{E7CC8FC8-0744-426B-8E81-4FA809B99E4E} = {66562722-5B96-4E3A-94A2-44D1808EF076}
-		{2CAA2056-9E27-45F4-AC22-1721B19C318C} = {FD77E793-CB99-4197-8F31-8ABA073761BE}
-		{D727BD0B-4EFE-45F1-8D1F-3496DA8966BD} = {2CAA2056-9E27-45F4-AC22-1721B19C318C}
-		{4B96419A-39C5-4DBF-98D3-CB2255AF9CD7} = {FD77E793-CB99-4197-8F31-8ABA073761BE}
-		{82AFB7AF-2BD8-4D55-8AC0-0E212B2EA039} = {D727BD0B-4EFE-45F1-8D1F-3496DA8966BD}
-		{7237272A-656C-403F-BCB6-8D557C082F52} = {D727BD0B-4EFE-45F1-8D1F-3496DA8966BD}
-		{FD77E793-CB99-4197-8F31-8ABA073761BE} = {E7CC8FC8-0744-426B-8E81-4FA809B99E4E}
+		{56C81DD3-815F-491E-BF83-003B98F93076} = {E7CC8FC8-0744-426B-8E81-4FA809B99E4E}
+		{C22D1B4A-31D3-49E0-B7C3-AA78E3EEC3E3} = {56C81DD3-815F-491E-BF83-003B98F93076}
+		{40C952E7-C505-49D9-BC8D-260997EF87EF} = {56C81DD3-815F-491E-BF83-003B98F93076}
+		{5FC9CEF5-AE14-4F16-94A2-3A486889C77F} = {C22D1B4A-31D3-49E0-B7C3-AA78E3EEC3E3}
+		{39C1F8DC-73A7-4A1B-8333-AB53BD3B3C77} = {5FC9CEF5-AE14-4F16-94A2-3A486889C77F}
+		{C8D01010-7D36-4C89-9356-AA38CC6C21A6} = {5FC9CEF5-AE14-4F16-94A2-3A486889C77F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8EE9DA79-94FF-4ABD-B8CB-8B6394632956}

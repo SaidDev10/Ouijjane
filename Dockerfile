@@ -8,14 +8,17 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 as build
 ARG MICROSVC
 ARG CSPROJ
 WORKDIR /src
-COPY . .
+COPY ./src/ .
+COPY ./Directory.Packages.props .
 RUN dotnet restore ${MICROSVC}/${CSPROJ}
+
 WORKDIR /src/${MICROSVC}
 RUN dotnet build ${CSPROJ} -c Release -o /app/build --verbosity minimal
 
 
 FROM build as publish
 RUN dotnet publish ${CSPROJ} -c Release -o /app/publish --verbosity minimal
+
 
 FROM base as final
 ARG ASSEMBLY
